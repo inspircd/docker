@@ -1,0 +1,5 @@
+[packages.sigterm.info]
+name=added from: http://packages.sigterm.info
+baseurl=http://packages.sigterm.info
+enabled=1
+gpgcheck=0
