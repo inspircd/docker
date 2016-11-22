@@ -8,7 +8,7 @@ InspIRCd is one of only a few IRC servers to provide a tunable number of feature
 
 # How to use this image
 
-First, start an instance of mongo:
+First, a simple run command:
 
 ```console
 $ docker run --name ircd -p 6667:6667 inspircd/inspircd
@@ -20,6 +20,14 @@ To configure include your configuration into the container use:
 
 ```console
 $ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd
+```
+
+# Build extras
+
+To build extra modules you can use the `--build-arg` statement.
+
+```console
+docker build --build-arg "ADDPACKAGES=geoip geoip-dev pcre-dev pcre" --build-arg "CONFIGUREARGS=--enable-extras=m_geoip.cpp --enable-extras=m_regex_pcre.cpp" docker-inspircd
 ```
 
 # License

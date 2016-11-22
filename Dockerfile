@@ -3,7 +3,7 @@ FROM alpine:3.4
 MAINTAINER Adam adam@anope.org
 MAINTAINER Sheogorath <sheogorath@shivering-isles.com>
 
-ARG VERSION=insp20 
+ARG VERSION=insp20
 ARG CONFIGUREARGS=
 ARG ADDPACKAGES=
 ARG DELPACKAGES=
@@ -11,8 +11,8 @@ ARG DELPACKAGES=
 COPY conf /conf
 
 RUN apk update && apk add gcc g++ make git gnutls gnutls-dev gnutls-c++ \
-    pkgconfig libssl1.0 openssl openssl-dev perl perl-net-ssleay \
-    perl-io-socket-ssl perl-libwww geoip geoip-dev pcre-dev pcre wget $ADDPACKAGES && \
+       pkgconfig perl perl-net-ssleay perl-io-socket-ssl perl-libwww \
+       wget $ADDPACKAGES && \
     adduser -u 10000 -h /inspircd/ -D -S inspircd && \
     mkdir -p /src /conf && \
     cd /src && \
@@ -34,6 +34,8 @@ WORKDIR /inspircd/
 USER inspircd
 
 EXPOSE 6667 6697
+
+HEALTHCHECK CMD  /usr/bin/nc 127.0.0.1 6667 < /dev/null; echo $?
 
 ENTRYPOINT ["/inspircd/bin/inspircd"]
 CMD ["--nofork"]
