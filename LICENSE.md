@@ -1,7 +1,7 @@
 MIT License
 
-Copyright (c) 2016 Adam <Adam@anope.org>
-Copyright (c) Sheogorath <sheogorath@shivering-isles.com>
+Copyright (c) 2016 Adam <Adam@anope.org>  
+Copyright (c) 2016 Sheogorath <sheogorath@shivering-isles.com>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
