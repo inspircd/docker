@@ -35,7 +35,7 @@ USER inspircd
 
 EXPOSE 6667 6697
 
-HEALTHCHECK CMD  /usr/bin/nc 127.0.0.1 6667 < /dev/null; echo $?
+HEALTHCHECK CMD  /usr/bin/nc 127.0.0.1 6667 < /dev/null || exit 1
 
 ENTRYPOINT ["/inspircd/bin/inspircd"]
 CMD ["--nofork"]
