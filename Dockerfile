@@ -9,10 +9,11 @@ ARG ADDPACKAGES=
 ARG DELPACKAGES=
 
 COPY conf /conf
+COPY entrypoint.sh /inspircd/entrypoint.sh
 
 RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
        pkgconfig perl perl-net-ssleay perl-io-socket-ssl  \
-       perl-libwww wget gnutls gnutls-dev $ADDPACKAGES && \
+       perl-libwww wget gnutls gnutls-dev gnutls-utils $ADDPACKAGES && \
     adduser -u 10000 -h /inspircd/ -D -S inspircd && \
     mkdir -p /src /conf && \
     cd /src && \
@@ -24,7 +25,9 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     apk del gcc g++ make git pkgconfig perl perl-net-ssleay perl-io-socket-ssl \
        perl-libwww wget gnutls-dev $DELPACKAGES && \
     rm -rf /src && \
-    rm -rf /inspircd/conf && ln -s /conf /inspircd/conf
+    rm -rf /inspircd/conf && ln -s /conf /inspircd/conf && \
+    chown -R inspircd /inspircd/ && \
+    chown -R inspircd /conf/
 
 VOLUME ["/inspircd/conf"]
 
@@ -34,9 +37,8 @@ WORKDIR /inspircd/
 
 USER inspircd
 
-EXPOSE 6667 6697
+EXPOSE 6667 6697 7000 7001
 
 HEALTHCHECK CMD  /usr/bin/nc 127.0.0.1 6667 < /dev/null || exit 1
 
-ENTRYPOINT ["/inspircd/bin/inspircd"]
-CMD ["--nofork"]
+ENTRYPOINT ["/inspircd/entrypoint.sh"]

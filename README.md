@@ -20,6 +20,35 @@ To configure include your configuration into the container use:
 $ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd
 ```
 
+Default ports of this container:
+
+|Port|config            |
+|----|------------------|
+|6667|clients, plaintext|
+|6697|clients, tls      |
+|7000|server, plaintext |
+|7001|server, tls       |
+
+## TLS
+
+This container generates a self-signed TLS certificate on startup as long as none exists. To use this container with TLS enabled:
+
+```console
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd
+```
+
+You can customize the self-signed TLS certificate using the following environment variables:
+
+* `INSP_TLS_CN`
+* `INSP_TLS_MAIL`
+* `INSP_TLS_UNIT`
+* `INSP_TLS_ORG`
+* `INSP_TLS_LOC`
+* `INSP_TLS_STATE`
+* `INSP_TLS_COUNTRY`
+* `INSP_TLS_DURATION`
+
+
 # Build extras
 
 To build extra modules you can use the `--build-arg` statement.
