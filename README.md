@@ -53,8 +53,18 @@ You can customize the self-signed TLS certificate using the following environmen
 
 To build extra modules you can use the `--build-arg` statement.
 
+Available build arguments:
+
+|Argument|Description                                              |
+|--------|---------------------------------------------------------|
+|VERSION |Version of InspIRCd. Uses `-b`-parameter from `git clone`|
+|CONFIGUREARGS|Additional Parameters. Used to enable core extras like `m_geoip.cpp`|
+|EXTRASMODULES|Additional Modules from [inspircd-extras](https://github.com/inspircd/inspircd-extras/tree/master/2.0) repository like `m_geoipban`|
+|ADDPACKAGES|Additional packages which are installed before compilation|
+|DELPACKAGES|Additional packages which are deleted after compilation|
+
 ```console
-docker build --build-arg "ADDPACKAGES=geoip geoip-dev pcre-dev pcre" --build-arg "CONFIGUREARGS=--enable-extras=m_geoip.cpp --enable-extras=m_regex_pcre.cpp" docker-inspircd
+docker build --build-arg "ADDPACKAGES=geoip geoip-dev pcre-dev pcre" --build-arg "CONFIGUREARGS=--enable-extras=m_geoip.cpp --enable-extras=m_regex_pcre.cpp"  --build-arg "EXTRASMODULES=m_geoipban" inspircd-docker
 ```
 
 # License
