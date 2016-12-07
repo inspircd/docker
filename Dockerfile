@@ -24,7 +24,7 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     /bin/sh extras.sh $EXTRASMODULES && \
     ./configure --enable-extras=m_ssl_gnutls.cpp $CONFIGUREARGS && \
     ./configure --disable-interactive --prefix=/inspircd/ --uid 10000 && \
-    make && \
+    make -j`getconf _NPROCESSORS_ONLN` && \
     make install && \
     apk del gcc g++ make git pkgconfig perl perl-net-ssleay perl-crypt-ssleay \
        perl-libwww perl-lwp-protocol-https wget gnutls-dev $DELPACKAGES && \
