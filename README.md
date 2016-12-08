@@ -9,7 +9,7 @@ InspIRCd is one of only a few IRC servers to provide a tunable number of feature
 First, a simple run command:
 
 ```console
-$ docker run --name ircd -p 6667:6667 inspircd/inspircd
+$ docker run --name ircd -p 6667:6667 inspircd/inspircd-docker
 ```
 
 This will start an inspircd instance listening on the default irc port 6667 on the container.
@@ -17,7 +17,7 @@ This will start an inspircd instance listening on the default irc port 6667 on t
 To configure include your configuration into the container use:
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd
+$ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd-docker
 ```
 
 Default ports of this container:
@@ -34,7 +34,7 @@ Default ports of this container:
 This container generates a self-signed TLS certificate on startup as long as none exists. To use this container with TLS enabled:
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd-docker
 ```
 
 You can customize the self-signed TLS certificate using the following environment variables:
