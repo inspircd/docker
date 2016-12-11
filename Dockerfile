@@ -28,12 +28,13 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     make install && \
     apk del gcc g++ make git pkgconfig perl perl-net-ssleay perl-crypt-ssleay \
        perl-libwww perl-lwp-protocol-https wget gnutls-dev $DELPACKAGES && \
+    cp -r /inspircd/conf/examples/ /conf && \
     rm -rf /src && \
-    rm -rf /inspircd/conf && ln -s /conf /inspircd/conf && \
+    rm -rf /inspircd/conf && \
     chown -R inspircd /inspircd/ && \
     chown -R inspircd /conf/
 
-VOLUME ["/inspircd/conf"]
+VOLUME ["/conf"]
 
 
 
