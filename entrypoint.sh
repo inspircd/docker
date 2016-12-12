@@ -1,5 +1,26 @@
 #!/bin/sh
 
+
+# Make sure that the volume contains a default config but don't override and existing one
+if [ -d /inspircd/conf/ ]; then
+    if [ ! -f /inspircd/conf/inspircd.conf ] && [ -w /inspircd/conf/ ]; then
+        cp -r /conf/* /inspircd/conf/
+    elif [ ! -w /inspircd/conf/ ]; then
+        echo "
+            ##################################
+            ###                            ###
+            ###   Can't write to volume!   ###
+            ###    Please change owner     ###
+            ###        to uid 10000        ###
+            ###                            ###
+            ##################################
+        "
+    fi
+else
+    ln -s /conf /inspircd/conf
+fi
+
+# Make sure there is a certificate or generate an new one
 if [ ! -f /inpircd/conf/cert.pem ] && [ ! -f /inpircd/conf/key.pem ]; then
     cat > /tmp/cert.template <<EOF
 cn              = "${INSP_TLS_CN:-irc.example.com}"

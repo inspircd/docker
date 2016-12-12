@@ -20,6 +20,8 @@ To configure include your configuration into the container use:
 $ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd-docker
 ```
 
+*Notice: In case you provide an empty directory make sure it's owned by uid 10000. Use `chown 10000 directory` to correct permissions*
+
 Default ports of this container:
 
 |Port|config            |
