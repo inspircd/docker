@@ -13,7 +13,7 @@ before_script:
 
 
 script:
-  # initial build withdefault parameters
+  # Initial build with default parameters
   - docker build -t inspircd:testing .
   # Run container in a simple way
   - docker run -d --name testing -p 127.0.0.1:6667:6667 -p 127.0.0.1:6697:6697 inspircd:testing
@@ -30,7 +30,7 @@ script:
   - mkdir testconf && sudo chown 10000 testconf
   - docker run -d --name testing -v $(pwd)/testconf:/inspircd/conf -p 127.0.0.1:6667:6667 -p 127.0.0.1:6697:6697 inspircd:testing
   - sleep 5
-  # Check if cofnig was created sucessfully
+  # Check if config was created successfully
   - diff conf/inspircd.conf testconf/inspircd.conf
   # Make sure TLS is working in the setup with persistent config too
   - echo quit | timeout 10 openssl s_client -ign_eof -connect localhost:6697

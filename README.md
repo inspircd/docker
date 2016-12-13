@@ -14,7 +14,7 @@ $ docker run --name ircd -p 6667:6667 inspircd/inspircd-docker
 
 This will start an inspircd instance listening on the default irc port 6667 on the container.
 
-To configure include your configuration into the container use:
+To include your configuration into the container use:
 
 ```console
 $ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd-docker
@@ -22,7 +22,7 @@ $ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf
 
 *Notice: In case you provide an empty directory make sure it's owned by uid 10000. Use `chown 10000 directory` to correct permissions*
 
-Default ports of this container:
+Default ports of this container image:
 
 |Port|config            |
 |----|------------------|
@@ -33,7 +33,7 @@ Default ports of this container:
 
 ## TLS
 
-This container generates a self-signed TLS certificate on startup as long as none exists. To use this container with TLS enabled:
+This container image generates a self-signed TLS certificate on startup as long as none exists. To use this container with TLS enabled:
 
 ```console
 $ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd-docker
