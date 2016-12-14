@@ -3,7 +3,7 @@
 
 # Make sure that the volume contains a default config but don't override and existing one
 if [ -d /inspircd/conf/ ]; then
-    if [ ! -f /inspircd/conf/inspircd.conf ] && [ -w /inspircd/conf/ ]; then
+    if [ ! -e /inspircd/conf/inspircd.conf ] && [ -w /inspircd/conf/ ]; then
         cp -r /conf/* /inspircd/conf/
     elif [ ! -w /inspircd/conf/ ]; then
         echo "
@@ -21,7 +21,7 @@ else
 fi
 
 # Make sure there is a certificate or generate an new one
-if [ ! -f /inpircd/conf/cert.pem ] && [ ! -f /inpircd/conf/key.pem ]; then
+if [ ! -e /inspircd/conf/cert.pem ] && [ ! -e /inspircd/conf/key.pem ]; then
     cat > /tmp/cert.template <<EOF
 cn              = "${INSP_TLS_CN:-irc.example.com}"
 email           = "${INSP_TLS_MAIL:-nomail@example.com}"
