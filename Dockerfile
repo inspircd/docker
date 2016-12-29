@@ -23,7 +23,7 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     echo -e "if [ \$# -gt 0 ]; then \\n./modulemanager install \$@ \\nfi" > extras.sh && \
     /bin/sh extras.sh $EXTRASMODULES && \
     ./configure --enable-extras=m_ssl_gnutls.cpp $CONFIGUREARGS && \
-    ./configure --disable-interactive --prefix=/inspircd/ --uid 10000 && \
+    ./configure --disable-interactive --prefix=/inspircd/ --uid 10000  --with-cc='c++ -DINSPIRCD_GNUTLS_ENABLE_SHA256_FINGERPRINT' && \
     make -j`getconf _NPROCESSORS_ONLN` && \
     make install && \
     apk del gcc g++ make git pkgconfig perl perl-net-ssleay perl-crypt-ssleay \
