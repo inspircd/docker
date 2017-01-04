@@ -31,6 +31,35 @@ Default ports of this container image:
 |7000|server, plaintext |
 |7001|server, tls       |
 
+## Configuration
+
+Use the following environment variables to configure your containers.
+
+|Available variables|Default value                  |Description                          |
+|-------------------|-------------------------------|-------------------------------------|
+|INSP_NET_SUFFIX    |`.example.com`                 |Suffix used behind the servername    |
+|INSP_NET_NAME      |`Omega`                        |Name advertised as network name      |
+|INSP_SERVER_NAME   |Container id + INSP_NET_SUFFIX |Full container name. Has to be a FQDN|
+
+
+We also add a generic set of variables. You can access all environment variables prefixed by `INSPG_`. In case you want to mount your own config like in case before this can be useful to protect secrets:
+
+How to access them? Example for `INSPG_TEST_ENV`:
+
+```
+<tag value="&INSPG_TEST_ENV;">
+```
+
+Another actual example:
+
+```
+<badhost host="&INSPG_TEST_ENV;" reason="You are banned for some reason!">
+```
+
+To use it in your own mounted or backed in config inlcude `/conf/config.sh`.
+It'll set some default values and those generic ones.
+
+
 ## TLS
 
 This container image generates a self-signed TLS certificate on startup as long as none exists. To use this container with TLS enabled:
