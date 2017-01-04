@@ -5,34 +5,11 @@ services:
 
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y openssl
-
-before_script:
-  - echo \[ \$\(docker ps -f name=testing \| grep \\\(healthy\\\) \| wc -l\) \-eq 1 \] \|\| exit 1 > test.sh
-  - chmod +x test.sh
+  - sudo apt-get install -y openssl parallel
 
 
 script:
   # Initial build with default parameters
   - docker build -t inspircd:testing .
-  # Run container in a simple way
-  - docker run -d --name testing -p 127.0.0.1:6667:6667 -p 127.0.0.1:6697:6697 inspircd:testing
-  - sleep 5
-  # Make sure TLS is working
-  - echo quit | timeout 10 openssl s_client -ign_eof -connect localhost:6697
-  # Make sure the internal healthcheck is working
-  - sleep 28; /bin/sh test.sh
-  # Make sure the container is not restarting
-  - sleep 20; docker ps -f name=testing
-  - sleep 20; docker ps -f name=testing
-  - docker stop testing && docker rm testing
-  # Testing config mounting
-  - mkdir testconf && sudo chown 10000 testconf
-  - docker run -d --name testing -v $(pwd)/testconf:/inspircd/conf -p 127.0.0.1:6667:6667 -p 127.0.0.1:6697:6697 inspircd:testing
-  - sleep 5
-  # Check if config was created successfully
-  - diff conf/inspircd.conf testconf/inspircd.conf
-  # Make sure TLS is working in the setup with persistent config too
-  - echo quit | timeout 10 openssl s_client -ign_eof -connect localhost:6697
-  - sleep 28; /bin/sh test.sh
-  - docker stop testing && docker rm testing
+  # Run all tests from test directory
+  - ls tests/*.sh | parallel
