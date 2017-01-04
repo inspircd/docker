@@ -41,7 +41,7 @@ code_signing_key
 ocsp_signing_key
 time_stamping_key
 EOF
-    /usr/bin/certtool --generate-privkey --bits 4096 --sec-param normal --outfile /inspircd/conf/key.pem
+    /usr/bin/certtool --generate-privkey --ecc --sec-param high --outfile /inspircd/conf/key.pem
     /usr/bin/certtool --generate-self-signed --load-privkey /inspircd/conf/key.pem --outfile /inspircd/conf/cert.pem --template /tmp/cert.template
     rm /tmp/cert.template
 fi
