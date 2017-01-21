@@ -1,8 +1,13 @@
 #!/bin/sh
+echo "
+         ######################################
+         ###          Default test           ##
+         ######################################
+"
+
 
 # Make sure tests fails if a commend ends without 0
 set -e
-
 
 # Generate some random ports for testing
 CLIENT_PORT=$(cat /dev/urandom|od -N2 -An -i|awk -v f=10000 -v r=19999 '{printf "%i\n", f + r * $1 / 65536}')
@@ -18,7 +23,7 @@ TLS_SERVER_PORT=$(cat /dev/urandom|od -N2 -An -i|awk -v f=40000 -v r=49999 '{pri
 [ $(netstat -an | grep LISTEN | grep :$TLS_SERVER_PORT | wc -l) -eq 0 ] || { ./$0 && exit 0 || exit 1; }
 
 # Run container in a simple way
-DOCKERCONTAINER=$(docker run -d --name testing -p 127.0.0.1:${CLIENT_PORT}:6667 -p 127.0.0.1:${TLS_CLIENT_PORT}:6697 inspircd:testing)
+DOCKERCONTAINER=$(docker run -d -p 127.0.0.1:${CLIENT_PORT}:6667 -p 127.0.0.1:${TLS_CLIENT_PORT}:6697 inspircd:testing)
 sleep 5
 # Make sure TLS is working
 echo quit | timeout 10 openssl s_client -ign_eof -connect localhost:${TLS_CLIENT_PORT}
@@ -31,5 +36,6 @@ sleep 20
 docker ps -f id=${DOCKERCONTAINER}
 sleep 20
 docker ps -f id=${DOCKERCONTAINER}
-docker stop ${DOCKERCONTAINER} && docker rm ${DOCKERCONTAINER}
 
+# Clean up
+docker stop ${DOCKERCONTAINER} && docker rm ${DOCKERCONTAINER}
