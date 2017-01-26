@@ -1,4 +1,9 @@
 #!/bin/sh
+echo "
+         ######################################
+         ###        Base image test          ##
+         ######################################
+"
 
 DOCKERFILE=${1:-Dockerfile}
 
@@ -27,4 +32,4 @@ command_exits wget
 
 [ -e "$DOCKERFILE" ] || { echo >&2 "File '$DOCKERFILE' doesn't exist.  Aborting."; exit 1; }
 
-version_ge $(docker_base_version "$DOCKERFILE") $(docker_image_latest_tag `docker_base_name "$DOCKERFILE"`) || { echo >&2 "A newer base image is available! Please update."; exit 1; }
+version_ge $(docker_base_version "$DOCKERFILE") $(docker_image_latest_tag `docker_base_name "$DOCKERFILE"`) && echo "Base image is up to date! Test successful." || { echo >&2 "A newer base image is available! Please update."; exit 1; }
