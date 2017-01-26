@@ -13,3 +13,5 @@ script:
   - docker build -t inspircd:testing .
   # Run all tests from test directory
   - ls tests/*.sh | parallel
+  # Check base image to stay up-to-date
+  - ./version.sh
