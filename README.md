@@ -33,7 +33,10 @@ Default ports of this container image:
 |7000|server, plaintext |
 |7001|server, tls       |
 
+
 ## TLS
+
+### Using self-generated certificates
 
 This container image generates a self-signed TLS certificate on startup as long as none exists. To use this container with TLS enabled:
 
@@ -51,6 +54,26 @@ You can customize the self-signed TLS certificate using the following environmen
 * `INSP_TLS_STATE`
 * `INSP_TLS_COUNTRY`
 * `INSP_TLS_DURATION`
+
+### Using secrets
+
+We provide the ability to use `secrets` with this image to place a certificate to your nodes.
+
+**Docker version 1.13 is required and [secrets are only supported in swarm mode](https://docs.docker.com/engine/swarm/secrets/)**
+
+```console
+docker secret create irc.key /path/to/your/ircd.key
+docker secret create inspircd.crt /path/to/your/ircd.crt
+
+docker service create --name inspircd --secret source=irc.key,target=inspircd.key,mode=0400 --secret inspircd.crt inspircd/inspircd-docker
+```
+
+Notice the syntax `--secret source=irc.key,target=inspircd.key` allows you to name a secret in a way you like.
+
+Currently used secrets:
+
+* `inspircd.key`
+* `inspircd.crt`
 
 
 # Build extras

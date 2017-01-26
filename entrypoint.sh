@@ -20,6 +20,13 @@ else
     ln -s /conf /inspircd/conf
 fi
 
+# Link certificates from secrets
+# See https://docs.docker.com/engine/swarm/secrets/
+if [ -e /run/secrets/inspircd.key ] && [ -e /run/secrets/inspircd.crt ]; then
+    ln -s /run/secrets/inspircd.key /inspircd/conf/key.pem
+    ln -s /run/secrets/inspircd.crt /inspircd/conf/cert.pem
+fi
+
 # Make sure there is a certificate or generate an new one
 if [ ! -e /inspircd/conf/cert.pem ] && [ ! -e /inspircd/conf/key.pem ]; then
     cat > /tmp/cert.template <<EOF
