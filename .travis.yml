@@ -1,5 +1,5 @@
 sudo: required
-
+language: bash
 services:
   - docker
 
@@ -16,3 +16,10 @@ script:
   - docker build -t inspircd:testing .
   # Run all tests from test directory
   - ls tests/*.sh | parallel
+after_success:
+  # Run build on Docker Hub
+  - '[ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] &&  curl --data build=true -X POST $DOCKER_PUSH_URL'
+env:
+  global:
+    secure: oobSFVYoYNN5roJsau2cL80P+8AareK5mN/Ogb4s9j2sTfMYrjBkfvItzys65iHUbkEg18a4rD168e3cyaIGQFvM8mbrEvJAPc8uQnErA6+hV4bu74AEu96o4lTmB3paLkOOaS5WhRCzmc+hyJmPTGVUe+Z4bfbnjrAJlhZJaovH2ibdvzMsG/Gk0i4M0E04gZDyNSs0SRjCFrkJ3caRfwRVAW1kpba5sli/WzglIXJKqQUhz2CXMnGe6LtgwWuqFOAlzp2RoKd/3ri2F402LUNF5lf9LKt4ZL8zRhonN2mQQWz6iQOeLwzf/k4gj+Pufhjov2XU9t0MDr2hd0wF1YZATDEy+2Y/bQIU6Zjn3pFXe4fsRs6V8gbeFwhX15PshKUUkUWl6o2AwWufU6GqtDaI/fRj5+lx2u/HAlU+P+w1BEFBkUo5RZT11ePoVTvnB35Qz/HNhGe/oVMGPB2t31G7xaDtKnAWk/Xfnu94LtNz87z4QeDaCOrssXjiBT46ecUp5a8yInS0UMVCQIv4gNjnSZH30XVgA4Vqk3Rq3/HMSSXwtKssjaov9Z1QcXL4oz+pNFPyh7sNEGoK11lZq198CuD4xAO3/ctPSmbBS2DWE/t0Om+XlyrYTgB4GmNZd6qS4WBc/7UEDcz2/pnRaTpaCoHC55Mq+z1rfx1wxK8=
+

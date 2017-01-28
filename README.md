@@ -94,6 +94,18 @@ Available build arguments:
 docker build --build-arg "ADDPACKAGES=geoip geoip-dev pcre-dev pcre" --build-arg "CONFIGUREARGS=--enable-extras=m_geoip.cpp --enable-extras=m_regex_pcre.cpp"  --build-arg "EXTRASMODULES=m_geoipban" inspircd-docker
 ```
 
+# Updates and updating
+
+To update your setup simply pull the newest image version from docker hub and run it.
+
+```console
+docker pull inspircd/inspircd-docker
+```
+
+We automatically build our images weekly to include the current state of modern libraries.
+
+Considering to update your docker setup regulary.
+
 # License
 
 View [license information](https://github.com/inspircd/inspircd) for the software contained in this image.
