@@ -1,0 +1,4 @@
+rules:
+  # Ignore HEALTHCHECK
+  # https://github.com/replicatedhq/dockerfilelint/issues/28
+  invalid_command: false
