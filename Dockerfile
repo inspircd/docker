@@ -36,6 +36,7 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     cp -r /inspircd/conf/examples/ /conf && \
     rm -rf /src && \
     rm -rf /inspircd/conf && \
+    ln -s /dev/stdout /inspircd/logs/ircd.log && \
     # Make sure the application is allowed to write to it's own direcotry for 
     # logging and generation of certificates
     chown -R inspircd /inspircd/ && \
