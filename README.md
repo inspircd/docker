@@ -14,7 +14,7 @@ First, a simple run command:
 $ docker run --name ircd -p 6667:6667 inspircd/inspircd-docker
 ```
 
-This will start an inspircd instance listening on the default irc port 6667 on the container.
+This will start an InspIRCd instance listening on the default IRC port 6667 on the container.
 
 To include your configuration into the container use:
 
@@ -22,23 +22,23 @@ To include your configuration into the container use:
 $ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd-docker
 ```
 
-*Notice: In case you provide an empty directory make sure it's owned by uid 10000. Use `chown 10000 directory` to correct permissions*
+*Notice: In case you provide an empty directory make sure it's owned by UID 10000. Use `chown 10000 directory` to correct permissions*
 
 Default ports of this container image:
 
-|Port|config            |
+|Port|Configuration     |
 |----|------------------|
 |6667|clients, plaintext|
-|6697|clients, tls      |
+|6697|clients, TLS      |
 |7000|server, plaintext |
-|7001|server, tls       |
+|7001|server, TLS       |
 
 
 ## TLS
 
 ### Using self-generated certificates
 
-This container image generates a self-signed TLS certificate on startup as long as none exists. To use this container with TLS enabled:
+This container image generates a self-signed TLS certificate on start-up as long as none exists. To use this container with TLS enabled:
 
 ```console
 $ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd-docker
@@ -103,6 +103,19 @@ You can put the sources those modules in the modules directory of this repositor
 It also allows you to overwrite modules.
 
 Make sure you install all needed depenencies using `ADDPACKAGES`.
+
+
+# Updates and updating
+
+To update your setup simply pull the newest image version from docker hub and run it.
+
+```console
+docker pull inspircd/inspircd-docker
+```
+
+We automatically build our images weekly to include the current state of modern libraries.
+
+Considering to update your docker setup regularly.
 
 # License
 
