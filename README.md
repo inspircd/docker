@@ -96,13 +96,13 @@ docker build --build-arg "ADDPACKAGES=geoip geoip-dev pcre-dev pcre" --build-arg
 
 ## Building additional modules
 
-In case you want to develop inspircd it is useful to run inspircd with modules which neither exist in core modules nor in extras.
+In case you want to develop InspIRCd modules it is useful to run InspIRCd with modules which neither exist in core modules nor in extras.
 
-You can put the sources those modules in the modules directory of this repository. They are automatically copied to the modules directory of inspircd.
+You can put the sources these modules in the modules directory of this repository. They are automatically copied to the modules directory of InspIRCd.
 
 It also allows you to overwrite modules.
 
-Make sure you install all needed depenencies using `ADDPACKAGES`.
+Make sure you install all needed dependencies using `ADDPACKAGES`.
 
 # License
 
