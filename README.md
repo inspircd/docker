@@ -94,6 +94,17 @@ Available build arguments:
 docker build --build-arg "ADDPACKAGES=geoip geoip-dev pcre-dev pcre" --build-arg "CONFIGUREARGS=--enable-extras=m_geoip.cpp --enable-extras=m_regex_pcre.cpp"  --build-arg "EXTRASMODULES=m_geoipban" inspircd-docker
 ```
 
+## Building additional modules
+
+In case you want to develop InspIRCd modules it is useful to run InspIRCd with modules which neither exist in core modules nor in extras.
+
+You can put the sources these modules in the modules directory of this repository. They are automatically copied to the modules directory of InspIRCd.
+
+It also allows you to overwrite modules.
+
+Make sure you install all needed dependencies using `ADDPACKAGES`.
+
+
 # Updates and updating
 
 To update your setup simply pull the newest image version from docker hub and run it.

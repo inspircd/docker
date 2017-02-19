@@ -9,6 +9,8 @@ ARG EXTRASMODULES=
 ARG ADDPACKAGES=
 ARG DELPACKAGES=
 
+COPY modules /src/modules
+
 RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
        pkgconfig perl perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
        perl-libwww wget gnutls gnutls-dev gnutls-utils $ADDPACKAGES && \
@@ -19,6 +21,8 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     # Clone the requested version
     git clone https://github.com/inspircd/inspircd.git inspircd -b $VERSION && \
     cd /src/inspircd && \
+    # Add and overwrite modules
+    { [ $(ls /src/modules/ | wc -l) -gt 0 ] && cp -r /src/modules/* /src/inspircd/src/modules/ || echo "No modules overwritten/added by repository"; } && \
     # write a little script to handle empty extra modules
     echo -e "if [ \$# -gt 0 ]; then \\n./modulemanager install \$@ \\nfi" > extras.sh && \
     /bin/sh extras.sh $EXTRASMODULES && \
