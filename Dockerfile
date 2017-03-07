@@ -20,8 +20,7 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     git clone https://github.com/inspircd/inspircd.git inspircd -b $VERSION && \
     cd /src/inspircd && \
     # write a little script to handle empty extra modules
-    echo -e "if [ \$# -gt 0 ]; then \\n./modulemanager install \$@ \\nfi" > extras.sh && \
-    /bin/sh extras.sh $EXTRASMODULES && \
+    echo $EXTRASMODULES | xargs --no-run-if-empty ./modulemanager install && \ 
     # Enable GNUtls with SHA256 fingerprints
     ./configure --enable-extras=m_ssl_gnutls.cpp $CONFIGUREARGS && \
     ./configure --disable-interactive --prefix=/inspircd/ --uid 10000  \
