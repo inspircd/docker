@@ -10,7 +10,7 @@ docker_installed() { command -v docker >/dev/null 2>&1 || { wget -O- http://get.
 command_exists wget
 docker_installed
 
-# Check make sure we can talk to the docker daemon
+# Check to make sure we can talk to the docker daemon
 [ -w /var/run/docker.sock ] || SUDO=sudo
 
 # Default run parameter
