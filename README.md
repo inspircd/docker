@@ -6,6 +6,20 @@ InspIRCd is a modular Internet Relay Chat (IRC) server written in C++ for Linux,
 
 InspIRCd is one of only a few IRC servers to provide a tunable number of features through the use of an advanced but well documented module system. By keeping core functionality to a minimum we hope to increase the stability, security and speed of InspIRCd while also making it customisable to the needs of many different users.
 
+# Bootstraping
+
+The easiest way to run this image is using our bootstrap script.
+
+To use it run the following statement:
+
+```console
+wget -qO- https://raw.githubusercontent.com/Adam-/inspircd-docker/master/bootstrap.sh | sh
+```
+
+The bootstrap script takes care about the fact that docker is installed and runs the image.
+
+If port `6697` or `6667` are already in use another random port is used. otherwise those ports are allocated by the container.
+
 # How to use this image
 
 First, a simple run command:
