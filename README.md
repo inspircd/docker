@@ -18,7 +18,7 @@ wget -qO- https://raw.githubusercontent.com/Adam-/inspircd-docker/master/bootstr
 
 The bootstrap script takes care about the fact that docker is installed and runs the image.
 
-If port `6697` or `6667` are already in use another random port is used. otherwise those ports are allocated by the container.
+If port `6697` or `6667` are already in use another random port is used. Otherwise those ports are allocated by the container.
 
 # How to use this image
 
