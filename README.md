@@ -137,7 +137,7 @@ View [license information](https://github.com/inspircd/inspircd) for the softwar
 
 # Supported Docker versions
 
-This image is officially supported on Docker version 17.03.1-ce.
+This image is officially supported on Docker version 17.03.1-CE.
 
 Support for older versions (down to 1.12) is provided on a best-effort basis.
 
