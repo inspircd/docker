@@ -19,7 +19,7 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     mkdir -p /src /conf && \
     cd /src && \
     # Clone the requested version
-    git clone https://github.com/inspircd/inspircd.git inspircd -b $VERSION && \
+    git clone https://github.com/inspircd/inspircd.git inspircd --depth 1 -b $VERSION && \
     cd /src/inspircd && \
     # Add and overwrite modules
     { [ $(ls /src/modules/ | wc -l) -gt 0 ] && cp -r /src/modules/* /src/inspircd/src/modules/ || echo "No modules overwritten/added by repository"; } && \
