@@ -62,6 +62,7 @@ Use the following environment variables to configure your container:
 |`INSP_ADMIN_NAME`     |`Jonny English`                 |Name shown by the `/admin` command        |
 |`INSP_ADMIN_NICK`     |`MI5`                           |Nick shown by the `/admin` command        |
 |`INSP_ADMIN_EMAIL`    |`jonny.english@example.com`     |E-mail shown by the `/admin` command      |
+|`INSP_ENABLE_DNSBL`   |`yes`                           |Set to `no` to disable DNSBLs             |
 
 A quick example how to use the environment variables:
 
@@ -152,6 +153,14 @@ docker pull inspircd/inspircd-docker
 We automatically build our images weekly to include the current state of modern libraries.
 
 Considering to update your docker setup regularly.
+
+# Additional information
+
+By default this image ships DNSBL settings for [DroneBL](http://dronebl.org) and [EFnet RBL](http://efnetrbl.org/).
+
+This should provide a basic protection for your server, but also causes problems if you want to use [Tor](https://www.torproject.org/) or open proxies.
+
+Set `INSP_ENABLE_DNSBL` to `no` to disable them.
 
 # License
 

@@ -12,6 +12,9 @@ cat <<EOF
 <define name="adminname" value="${INSP_ADMIN_NAME:-Jonny English}">
 <define name="adminnick" value="${INSP_ADMIN_NICK:-MI5}">
 <define name="adminemail" value="${INSP_ADMIN_EMAIL:-jonny.english@example.com}">
+
+# Connect block section
+<define name="usednsbl" value="${INSP_ENABLE_DNSBL:-yes}">
 EOF
 
 # Space for further configs
