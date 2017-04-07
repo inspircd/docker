@@ -6,14 +6,16 @@ MAINTAINER Sheogorath <sheogorath@shivering-isles.com>
 ARG VERSION=insp20
 ARG CONFIGUREARGS=
 ARG EXTRASMODULES=
-ARG ADDPACKAGES=
-ARG DELPACKAGES=
+ARG RUN_DEPENDENCIES=
+ARG BUILD_DEPENDENCIES=
 
 COPY modules /src/modules
 
-RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
-       pkgconfig perl perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
-       perl-libwww wget gnutls gnutls-dev gnutls-utils $ADDPACKAGES && \
+RUN apk add --no-cache --virtual .build-utils gcc g++ make git pkgconfig perl \
+       perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
+       perl-libwww wget gnutls-dev $BUILD_DEPENDENCIES && \
+    # Install all permanent packages as long-therm dependencies
+    apk add --no-cache --virtual .dependencies libgcc libstdc++ gnutls gnutls-utils $RUN_DEPENDENCIES && \
     # Create a user to run inspircd later
     adduser -u 10000 -h /inspircd/ -D -S inspircd && \
     mkdir -p /src /conf && \
@@ -33,8 +35,7 @@ RUN apk add --no-cache gcc g++ make libgcc libstdc++ git  \
     make -j`getconf _NPROCESSORS_ONLN` && \
     make install && \
     # Uninstall all unnecessary tools after build process
-    apk del gcc g++ make git pkgconfig perl perl-net-ssleay perl-crypt-ssleay \
-       perl-libwww perl-lwp-protocol-https wget gnutls-dev $DELPACKAGES && \
+    apk del .build-utils && \
     # Keep example configs as good reference for users
     cp -r /inspircd/conf/examples/ /conf && \
     rm -rf /src && \
