@@ -48,6 +48,28 @@ Default ports of this container image:
 |7001|server, TLS       |
 
 
+## Generated configuration
+
+Instead of including of your own configuration files, this container allows you to manipulate a few options of the default configuration by environment variables.
+
+Use the following environment variables to configure your container:
+
+|Available variables   |Default value                   |Description                               |
+|----------------------|--------------------------------|------------------------------------------|
+|`INSP_NET_SUFFIX`     |`.example.com`                  |Suffix used behind the server name        |
+|`INSP_NET_NAME`       |`Omega`                         |Name advertised as network name           |
+|`INSP_SERVER_NAME`    |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be a FQDN     |
+|`INSP_ADMIN_NAME`     |`Jonny English`                 |Name shown by the `/admin` command        |
+|`INSP_ADMIN_NICK`     |`MI5`                           |Nick shown by the `/admin` command        |
+|`INSP_ADMIN_EMAIL`    |`jonny.english@example.com`     |E-mail shown by the `/admin` command      |
+
+A quick example how to use the environment variables:
+
+```consoel
+$ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspircd/inspircd-docker
+```
+
+
 ## TLS
 
 ### Using self-generated certificates
