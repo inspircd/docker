@@ -10,6 +10,23 @@ docker_installed() { command -v docker >/dev/null 2>&1 || { wget -O- http://get.
 command_exists wget
 docker_installed
 
+# Workaround for CentOS and maybe more OSes where docker.service is not started automatically
+# See https://github.com/Adam-/inspircd-docker/issues/35
+if command -v systemctl >/dev/null 2>&1; then
+    # Make sure docker unit exists
+    if [ "$(systemctl cat docker | wc -l)" -ne 0 ]; then
+        # Only act if the docker unit is not already active
+        if ! systemctl --quiet is-active docker; then
+            systemctl start docker
+            systemctl enable docker
+            echo "!! INFO !!                                                          !! INFO !!"
+            echo "!! INFO !! We started and enabled the docker service on your system !! INFO !!"
+            echo "!! INFO !!                                                          !! INFO !!"
+        fi
+    fi ;
+fi
+
+
 # Check to make sure we can talk to the docker daemon
 [ -w /var/run/docker.sock ] || SUDO=sudo
 
