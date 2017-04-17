@@ -5,6 +5,7 @@ services:
 
 before_install:
   - sudo apt-get -qq update
+  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-engine
   - sudo apt-get install -y openssl parallel
 
 
