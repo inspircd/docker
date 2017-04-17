@@ -15,7 +15,8 @@ script:
   # Initial build with default parameters
   - docker build -t inspircd:testing .
   # Run all tests from test directory
-  - ls tests/*.sh | parallel
+  - ls tests/*.sh | parallel --joblog /tmp/joblog
+  - cat /tmp/joblog
 after_success:
   # Run build on Docker Hub
   - '[ "$TRAVIS_EVENT_TYPE" = "cron" ] &&  [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" = "master" ] &&  curl --data build=true -X POST $DOCKER_PUSH_URL'
