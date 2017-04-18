@@ -54,21 +54,55 @@ Instead of including of your own configuration files, this container allows you 
 
 Use the following environment variables to configure your container:
 
-|Available variables   |Default value                   |Description                               |
-|----------------------|--------------------------------|------------------------------------------|
-|`INSP_NET_SUFFIX`     |`.example.com`                  |Suffix used behind the server name        |
-|`INSP_NET_NAME`       |`Omega`                         |Name advertised as network name           |
-|`INSP_SERVER_NAME`    |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be a FQDN     |
-|`INSP_ADMIN_NAME`     |`Jonny English`                 |Name shown by the `/admin` command        |
-|`INSP_ADMIN_NICK`     |`MI5`                           |Nick shown by the `/admin` command        |
-|`INSP_ADMIN_EMAIL`    |`jonny.english@example.com`     |E-mail shown by the `/admin` command      |
-|`INSP_ENABLE_DNSBL`   |`yes`                           |Set to `no` to disable DNSBLs             |
+|Available variables    |Default value                   |Description                               |
+|-----------------------|--------------------------------|------------------------------------------|
+|`INSP_NET_SUFFIX`      |`.example.com`                  |Suffix used behind the server name        |
+|`INSP_NET_NAME`        |`Omega`                         |Name advertised as network name           |
+|`INSP_SERVER_NAME`     |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be a FQDN     |
+|`INSP_ADMIN_NAME`      |`Jonny English`                 |Name shown by the `/admin` command        |
+|`INSP_ADMIN_NICK`      |`MI5`                           |Nick shown by the `/admin` command        |
+|`INSP_ADMIN_EMAIL`     |`jonny.english@example.com`     |E-mail shown by the `/admin` command      |
+|`INSP_ENABLE_DNSBL`    |`yes`                           |Set to `no` to disable DNSBLs             |
 
 A quick example how to use the environment variables:
 
-```consoel
+```console
 $ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspircd/inspircd-docker
 ```
+
+## Oper
+
+We provide two possibly ways to define a default oper for the server. 
+
+If neither `INSP_OPER_PASSWORD`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will provided to keep your server secure.
+
+Further details see official [`opers.conf` docs](https://github.com/inspircd/inspircd/blob/insp20/docs/conf/opers.conf.example#L77-L165).
+
+### Password authentication
+
+A normal password authentication uses `/oper <opername> <password>` (everything case sensitive)
+
+
+|Available variables    |Default value                   |Description                               |
+|-----------------------|--------------------------------|------------------------------------------|
+|`INSP_OPER_NAME`       |`oper`                          |Oper name for usage with `/oper`          |
+|`INSP_OPER_PASSWORD`   |no default                      |Oper password for usage with `/oper`      |
+|`INSP_OPER_HOST`       |`*@*`                           |Hosts allowed to oper up                  |
+|`INSP_OPER_HASH`       |`hmac-sha256`                   |Hashing algorithm for `INSP_OPER_PASSWORD`|
+|`INSP_OPER_SSLONLY`    |`yes`                           |Allow oper up only while using TLS        |
+
+
+### Client certificate authentication
+
+This way only works using TLS connection and uses a client certificate for authentication.
+
+Provide the SHA256 fingerprint of the certificate as `INSP_OPER_FINGERPRINT` to configure it.
+
+|Available variables    |Default value                   |Description                               |
+|-----------------------|--------------------------------|------------------------------------------|
+|`INSP_OPER_NAME`       |`oper`                          |Oper name for usage with `/oper`          |
+|`INSP_OPER_FINGERPRINT`|no default                      |Oper TLS fingerprint (SHA256)             |
+|`INSP_OPER_AUTOLOGIN`  |`yes`                           |Automatic login of with TLS fingerprint   |
 
 
 ## TLS
