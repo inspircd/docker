@@ -1,5 +1,17 @@
 #/bin/sh
 
+# Define variables
+
+cat <<EOF
+<define name="operName" value="${INSP_OPER_NAME:-oper}">
+<define name="operPassword" value="${INSP_OPER_PASSWORD}">
+<define name="operFingerprint" value="${INSP_OPER_FINGERPRINT}">
+<define name="operAutologin" value="${INSP_OPER_SSLONLY:-yes}">
+<define name="operSSLOnly" value="${INSP_OPER_SSLONLY:-yes}">
+<define name="operHash" value="${INSP_OPER_HASH:-hmac-sha256}">
+<define name="operHost" value="${INSP_OPER_HOST:-*@*}">
+EOF
+
 # Default configs
 cat <<EOF
 #-#-#-#-#-#-#-#-#-#-#-#-  CLASS CONFIGURATION   -#-#-#-#-#-#-#-#-#-#-#-
@@ -67,7 +79,7 @@ cat <<EOF
     classes="SACommands OperChat BanControl HostCloak Shutdown ServerLink"
 
     # vhost: Host opers of this type get when they log in (oper up). This is optional.
-    vhost="netadmin${INSP_NET_SUFFIX}"
+    vhost="netadmin&netsuffix;"
 
     # modes: User modes besides +o that are set on an oper of this type
     # when they oper up. Used for snomasks and other things.
@@ -88,7 +100,7 @@ cat <<EOF
 <oper
       # name: Oper login that is used to oper up (/oper name password).
       # Remember: This is case sensitive.
-      name="${INSP_OPER_NAME:-oper}"
+      name="&operName;"
 
       # ** ADVANCED ** This option is disabled by default.
       # fingerprint: When using the m_sslinfo module, you may specify
@@ -98,15 +110,15 @@ cat <<EOF
       # a matching SSL client certificate, which is very difficult to
       # forge (impossible unless preimage attacks on the hash exist).
       # If m_sslinfo isn't loaded, this option will be ignored.
-      fingerprint="${INSP_OPER_FINGERPRINT}"
+      fingerprint="&operFingerprint;"
 
       # autologin: If an SSL fingerprint for this oper is specified, you can
       # have the oper block automatically log in. This moves all security of the
       # oper block to the protection of the client certificate, so be sure that
       # the private key is well-protected! Requires m_sslinfo.
-      autologin="${INSP_OPER_AUTOLOGIN:-yes}"
+      autologin="&operAutologin;"
 
-      sslonly="${INSP_OPER_SSLONLY:-yes}"
+      sslonly="&operSSLOnly;"
       type="NetAdmin">
 EOF
 
@@ -118,7 +130,7 @@ cat <<EOF
 <oper
       # name: Oper login that is used to oper up (/oper name password).
       # Remember: This is case sensitive.
-      name="${INSP_OPER_NAME:-oper}"
+      name="&operName;"
 
       # hash: What hash this password is hashed with.
       # Requires the module for selected hash (m_md5.so, m_sha256.so
@@ -127,25 +139,25 @@ cat <<EOF
       # Options here are: "md5", "sha256" and "ripemd160", or one of
       # these prefixed with "hmac-", e.g.: "hmac-sha256".
       # Create hashed passwords with: /mkpasswd <hash> <password>
-      hash="${INSP_OPER_HASH:-hmac-sha256}"
+      hash="&operHash;"
 
       # password: A hash of the password (see above option) hashed
       # with /mkpasswd <hash> <password>. See m_password_hash in modules.conf
       # for more information about password hashing.
-      password="${INSP_OPER_PASSWORD}"
+      password="&operPassword;"
 
       # host: What hostnames and IPs are allowed to use this operator account.
       # Multiple options can be separated by spaces and CIDRs are allowed.
       # You can use just * or *@* for this section, but it is not recommended
       # for security reasons.
-      host="${INSP_OPER_HOST:-*@*}"
+      host="&operHost;"
 
       # sslonly: If on, this oper can only oper up if they're using a SSL connection.
       # Setting this option adds a decent bit of security. Highly recommended
       # if the oper is on wifi, or specifically, unsecured wifi. Note that it
       # is redundant to specify this option if you specify a fingerprint.
       # This setting only takes effect if m_sslinfo is loaded.
-      sslonly="${INSP_OPER_SSLONLY:-yes}"
+      sslonly="&operSSLOnly;"
 
       # type: Which type of operator this person is; see the block
       # above for the list of types. NOTE: This is case-sensitive as well.

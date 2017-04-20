@@ -23,7 +23,7 @@ TLS_SERVER_PORT=$(cat /dev/urandom|od -N2 -An -i|awk -v f=40000 -v r=49999 '{pri
 [ $(netstat -an | grep LISTEN | grep :$SERVER_PORT | wc -l) -eq 0 ] || { ./$0 && exit 0 || exit 1; }
 [ $(netstat -an | grep LISTEN | grep :$TLS_SERVER_PORT | wc -l) -eq 0 ] || { ./$0 && exit 0 || exit 1; }
 
-TESTFILE=/tmp/operConfigFingerprint/opers.conf
+TESTFILE=$(mktemp /tmp/operConfigFingerprint.XXXXXX)
 
 OPERNAME=Alice
 OPERFINGERPRINT=bob
@@ -38,9 +38,9 @@ sleep 10
 
 docker exec ${DOCKERCONTAINER} /bin/sh /inspircd/conf/opers.sh >"$TESTFILE"
 
-grep "name=\"$OPERNAME\"" "$TESTFILE"
-grep "fingerprint=\"$OPERFINGERPRINT\"" "$TESTFILE"
-grep "autologin=\"$OPERAUTOLOGIN\"" "$TESTFILE"
+grep "name=\"operName\" value=\"$OPERNAME\"" "$TESTFILE"
+grep "name=\"operFingerprint\" value=\"$OPERFINGERPRINT\"" "$TESTFILE"
+grep "fingerprint=\"&operFingerprint;\"" "$TESTFILE"
 
 # Clean up
 rm "$TESTFILE"
