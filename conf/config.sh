@@ -17,4 +17,9 @@ cat <<EOF
 <define name="usednsbl" value="${INSP_ENABLE_DNSBL:-yes}">
 EOF
 
+# Include custom configurations if conf.d exists
+if [ -d conf.d ]; then
+    ls conf.d/*.conf | while read file; do echo "<include file=\"$file\">"; done
+fi
+
 # Space for further configs
