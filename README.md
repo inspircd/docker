@@ -146,6 +146,19 @@ Currently used secrets:
 * `inspircd.key`
 * `inspircd.crt`
 
+## Generic configuration includes
+
+To extend the default configuration you can use `/inspircd/conf.d/`.
+
+All `.conf`-files placed there, by mounting or extending the image, are automatically included.
+
+```console
+$ docker run --name inspircd -p 6667:6667 -v /path/to/your/configs:/inspircd/conf.d/ inspircd/inspircd-docker
+```
+
+*You have to take care about possible conflicts with the existing configuration. If you want a full custom configuration,
+copy or mount it to `/inspircd/conf/` instead of `/inspircd/conf.d/`.*
+
 
 # Build extras
 
