@@ -1,10 +1,14 @@
 #/bin/sh
 
-# Define variables
+# Prevent breaking changes
+if [ "$INSP_OPER_PASSWORD_HASH" = "" ] && [ "$INSP_OPER_PASSWORD" != "" ]; then
+    INSP_OPER_PASSWORD_HASH="$INSP_OPER_PASSWORD"
+fi
 
+# Define variables
 cat <<EOF
 <define name="operName" value="${INSP_OPER_NAME:-oper}">
-<define name="operPassword" value="${INSP_OPER_PASSWORD}">
+<define name="operPassword" value="${INSP_OPER_PASSWORD_HASH}">
 <define name="operFingerprint" value="${INSP_OPER_FINGERPRINT}">
 <define name="operAutologin" value="${INSP_OPER_SSLONLY:-yes}">
 <define name="operSSLOnly" value="${INSP_OPER_SSLONLY:-yes}">
@@ -123,7 +127,7 @@ cat <<EOF
 EOF
 
 # Generate oper with password
-elif [ "${INSP_OPER_PASSWORD}" != "" ]; then
+elif [ "${INSP_OPER_PASSWORD_HASH}" != "" ]; then
 
 cat <<EOF
 # Operator with a hashed password. It is highly recommended to use hashed passwords.
