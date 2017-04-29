@@ -15,7 +15,7 @@ SERVERNAME="test.example.com"
 DOCKERCONTAINER=$(docker run -d -e "INSP_SERVER_NAME=$SERVERNAME" inspircd:testing)
 sleep 10
 
-docker logs ${DOCKERCONTAINER} 2>/dev/null | grep $SERVERNAME
+docker logs "${DOCKERCONTAINER}" 2>/dev/null | grep $SERVERNAME
 
 # Clean up
-docker stop ${DOCKERCONTAINER} && docker rm ${DOCKERCONTAINER}
+docker stop "${DOCKERCONTAINER}" && docker rm "${DOCKERCONTAINER}"

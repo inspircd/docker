@@ -10,4 +10,4 @@ echo "
 set -e
 
 # Run linter
-docker run --rm -v `pwd`/.dockerfilelintrc:/.dockerfilelintrc -v `pwd`/Dockerfile:/Dockerfile sheogorath/dockerfilelint /Dockerfile
+docker run --rm -v "$(pwd)/.dockerfilelintrc:/.dockerfilelintrc" -v "$(pwd)/Dockerfile:/Dockerfile" sheogorath/dockerfilelint /Dockerfile

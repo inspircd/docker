@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SC2002,SC2046,SC2086
 
 # Generate some random ports for testing
 CLIENT_PORT=$(cat /dev/urandom|od -N2 -An -i|awk -v f=10000 -v r=19999 '{printf "%i\n", f + r * $1 / 65536}')
