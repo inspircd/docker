@@ -19,6 +19,7 @@ sleep 5
 
 # Make sure TLS is working
 echo quit | timeout 10 openssl s_client -ign_eof -connect "localhost:${TLS_CLIENT_PORT}"
+
 sleep 28
 
 # Make sure the internal healthcheck is working

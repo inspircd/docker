@@ -13,18 +13,19 @@ set -e
 . $(dirname "$0")/.portconfig.sh
 
 # Create config directory for testing
-mkdir /tmp/test-customBuild/
+TESTDIR=/tmp/test-customBuild/
+mkdir -p "$TESTDIR"
 
-cp -r . /tmp/test-customBuild/
+cp -r . "$TESTDIR"
 
-wget -O /tmp/test-customBuild/modules/m_rehashsslsignal.cpp  "https://raw.githubusercontent.com/inspircd/inspircd-extras/master/2.0/m_rehashsslsignal.cpp"
+wget -O "$TESTDIR/modules/m_rehashsslsignal.cpp"  "https://raw.githubusercontent.com/inspircd/inspircd-extras/master/2.0/m_rehashsslsignal.cpp"
 
-[ ! -e "/tmp/test-customBuild/modules/m_rehashsslsignal.cpp" ] && sleep 10
+[ ! -e "$TESTDIR/modules/m_rehashsslsignal.cpp" ] && sleep 10
 
 docker build /tmp/test-customBuild/
 
 # Build a second time to have a hash (everything is cached so it's no real build)
-DOCKERIMAGE=$(docker build -q /tmp/test-customBuild/)
+DOCKERIMAGE=$(docker build -q "$TESTDIR")
 
 # Run container in a simple way
 DOCKERCONTAINER=$(docker run -d -p "127.0.0.1:${CLIENT_PORT}:6667" -p "127.0.0.1:${TLS_CLIENT_PORT}:6697" "${DOCKERIMAGE}")
@@ -32,9 +33,9 @@ DOCKERCONTAINER=$(docker run -d -p "127.0.0.1:${CLIENT_PORT}:6667" -p "127.0.0.1
 sleep 5
 
 # Copy the custom module to the local test environemt
-docker cp "${DOCKERCONTAINER}:/inspircd/modules/m_rehashsslsignal.so" "/tmp/test-customBuild/"
+docker cp "${DOCKERCONTAINER}:/inspircd/modules/m_rehashsslsignal.so" "$TESTDIR"
 
-[ -s "/tmp/test-customBuild/m_rehashsslsignal.so"  ] || { echo >&2 "File empty, test failed!"; exit 1; }
+[ -s "$TESTDIR/m_rehashsslsignal.so"  ] || { echo >&2 "File empty, test failed!"; exit 1; }
 
 docker ps -f id="${DOCKERCONTAINER}"
 
