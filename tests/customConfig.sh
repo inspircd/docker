@@ -6,7 +6,7 @@ echo "
 "
 
 
-# Make sure tests fails if a commend ends without 0
+# Make sure tests fails if a command exits with non-zero
 set -e
 
 # shellcheck source=tests/.portconfig.sh
