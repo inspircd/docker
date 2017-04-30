@@ -54,15 +54,15 @@ Instead of including of your own configuration files, this container allows you 
 
 Use the following environment variables to configure your container:
 
-|Available variables    |Default value                   |Description                               |
-|-----------------------|--------------------------------|------------------------------------------|
-|`INSP_NET_SUFFIX`      |`.example.com`                  |Suffix used behind the server name        |
-|`INSP_NET_NAME`        |`Omega`                         |Name advertised as network name           |
-|`INSP_SERVER_NAME`     |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be a FQDN     |
-|`INSP_ADMIN_NAME`      |`Jonny English`                 |Name shown by the `/admin` command        |
-|`INSP_ADMIN_NICK`      |`MI5`                           |Nick shown by the `/admin` command        |
-|`INSP_ADMIN_EMAIL`     |`jonny.english@example.com`     |E-mail shown by the `/admin` command      |
-|`INSP_ENABLE_DNSBL`    |`yes`                           |Set to `no` to disable DNSBLs             |
+|Available variables      |Default value                   |Description                                 |
+|-------------------------|--------------------------------|--------------------------------------------|
+|`INSP_NET_SUFFIX`        |`.example.com`                  |Suffix used behind the server name          |
+|`INSP_NET_NAME`          |`Omega`                         |Name advertised as network name             |
+|`INSP_SERVER_NAME`       |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be a FQDN       |
+|`INSP_ADMIN_NAME`        |`Jonny English`                 |Name shown by the `/admin` command          |
+|`INSP_ADMIN_NICK`        |`MI5`                           |Nick shown by the `/admin` command          |
+|`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command        |
+|`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs               |
 
 A quick example how to use the environment variables:
 
@@ -74,7 +74,7 @@ $ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspir
 
 We provide two possibly ways to define a default oper for the server. 
 
-If neither `INSP_OPER_PASSWORD`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will provided to keep your server secure.
+If neither `INSP_OPER_PASSWORD_HASH`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will provided to keep your server secure.
 
 Further details see official [`opers.conf` docs](https://github.com/inspircd/inspircd/blob/insp20/docs/conf/opers.conf.example#L77-L165).
 
@@ -82,15 +82,25 @@ Further details see official [`opers.conf` docs](https://github.com/inspircd/ins
 
 A normal password authentication uses `/oper <opername> <password>` (everything case sensitive)
 
+To generate a password hash connect to the network and use `/mkpasswd <hash-type> <password>`.
 
-|Available variables    |Default value                   |Description                               |
-|-----------------------|--------------------------------|------------------------------------------|
-|`INSP_OPER_NAME`       |`oper`                          |Oper name for usage with `/oper`          |
-|`INSP_OPER_PASSWORD`   |no default                      |Oper password for usage with `/oper`      |
-|`INSP_OPER_HOST`       |`*@*`                           |Hosts allowed to oper up                  |
-|`INSP_OPER_HASH`       |`hmac-sha256`                   |Hashing algorithm for `INSP_OPER_PASSWORD`|
-|`INSP_OPER_SSLONLY`    |`yes`                           |Allow oper up only while using TLS        |
+|Available variables      |Default value                   |Description                                 |
+|-------------------------|--------------------------------|--------------------------------------------|
+|`INSP_OPER_NAME`         |`oper`                          |Oper name                                   |
+|`INSP_OPER_PASSWORD_HASH`|no default                      |Hash value for your oper password hash      |
+|`INSP_OPER_HOST`         |`*@*`                           |Hosts allowed to oper up                    |
+|`INSP_OPER_HASH`         |`hmac-sha256`                   |Hashing algorithm for `INSP_OPER_PASSWORD`  |
+|`INSP_OPER_SSLONLY`      |`yes`                           |Allow oper up only while using TLS          |
+|`INSP_OPER_PASSWORD`     |no default                      |(deprecated) Alias `INSP_OPER_PASSWORD_HASH`|
 
+
+For example to oper up with `/oper oper s3cret` you would run the following line:
+
+```console
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_OPER_PASSWORD_HASH=cNkbWRWn\$MhSTITMbrCxp0neoDqL66/MSI2C+oxIa4Ux6DXb5R4Q" inspircd/inspircd-docker
+```
+
+*Make sure you escape special chars like `$` or `&` if needed*
 
 ### Client certificate authentication
 
@@ -98,11 +108,11 @@ This way only works using TLS connection and uses a client certificate for authe
 
 Provide the SHA256 fingerprint of the certificate as `INSP_OPER_FINGERPRINT` to configure it.
 
-|Available variables    |Default value                   |Description                               |
-|-----------------------|--------------------------------|------------------------------------------|
-|`INSP_OPER_NAME`       |`oper`                          |Oper name for usage with `/oper`          |
-|`INSP_OPER_FINGERPRINT`|no default                      |Oper TLS fingerprint (SHA256)             |
-|`INSP_OPER_AUTOLOGIN`  |`yes`                           |Automatic login of with TLS fingerprint   |
+|Available variables      |Default value                   |Description                                 |
+|-------------------------|--------------------------------|--------------------------------------------|
+|`INSP_OPER_NAME`         |`oper`                          |Oper name for usage with `/oper`            |
+|`INSP_OPER_FINGERPRINT`  |no default                      |Oper TLS fingerprint (SHA256)               |
+|`INSP_OPER_AUTOLOGIN`    |`yes`                           |Automatic login of with TLS fingerprint     |
 
 
 ## TLS
@@ -200,6 +210,18 @@ docker pull inspircd/inspircd-docker
 We automatically build our images weekly to include the current state of modern libraries.
 
 Considering to update your docker setup regularly.
+
+## Deprecated features
+
+We provide information about features we remove in future.
+
+* `INSP_OPER_PASSWORD` - was replaced by `INSP_OPER_PASSWORD_HASH` as more descriptive name
+
+## Breaking changes
+
+We document changes that possibly broken your setup and are no longer supported. Hopefully we can provide useful information for debugging.
+
+* [`cdba94f`](https://github.com/Adam-/inspircd-docker/commit/cdba94f6ae0c71ad37b3a88114a14ecb0c5177c1) `ADDPACKAGES` and `DELPACKAGES` are replaced by `BUILD_DEPENDENCIES` and `RUN_DEPENDENCIES`
 
 # Additional information
 
