@@ -1,5 +1,5 @@
 #!/bin/sh
-
+# shellcheck disable=SC2068
 
 # Make sure that the volume contains a default config but don't override and existing one
 if [ -d /inspircd/conf/ ]; then

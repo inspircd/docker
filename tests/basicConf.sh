@@ -6,7 +6,7 @@ echo "
 "
 
 
-# Make sure tests fails if a commend ends without 0
+# Make sure tests fails if a command exits with non-zero
 set -e
 
 SERVERNAME="test.example.com"
@@ -15,7 +15,7 @@ SERVERNAME="test.example.com"
 DOCKERCONTAINER=$(docker run -d -e "INSP_SERVER_NAME=$SERVERNAME" inspircd:testing)
 sleep 10
 
-docker logs ${DOCKERCONTAINER} 2>/dev/null | grep $SERVERNAME
+docker logs "${DOCKERCONTAINER}" 2>/dev/null | grep $SERVERNAME
 
 # Clean up
-docker stop ${DOCKERCONTAINER} && docker rm ${DOCKERCONTAINER}
+docker stop "${DOCKERCONTAINER}" && docker rm "${DOCKERCONTAINER}"

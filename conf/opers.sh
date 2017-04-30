@@ -1,4 +1,4 @@
-#/bin/sh
+#!/bin/sh
 
 # Prevent breaking changes
 if [ "$INSP_OPER_PASSWORD_HASH" = "" ] && [ "$INSP_OPER_PASSWORD" != "" ]; then
