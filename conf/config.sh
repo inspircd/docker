@@ -1,4 +1,5 @@
 #!/bin/sh
+# shellcheck disable=SC2039
 
 # Default variables
 cat <<EOF
@@ -19,7 +20,7 @@ EOF
 
 # Include custom configurations if conf.d exists
 if [ -d conf.d ]; then
-    ls conf.d/*.conf | while read file; do echo "<include file=\"$file\">"; done
+    find conf.d/*.conf | while read -r file; do echo "<include file=\"$file\">"; done
 fi
 
 # Space for further configs
