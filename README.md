@@ -115,6 +115,35 @@ Provide the SHA256 fingerprint of the certificate as `INSP_OPER_FINGERPRINT` to 
 |`INSP_OPER_AUTOLOGIN`    |`yes`                           |Automatic login of with TLS fingerprint     |
 
 
+## Linking servers and services
+
+### Services
+
+This image allows you to configure services link blocks by environment variables.
+
+This way you can easily connect [Anope](https://www.anope.org/) or [Atheme](http://atheme.net/) to your InspIRCd container.
+
+|Available variables      |Default value                   |Description                                 |
+|-------------------------|--------------------------------|--------------------------------------------|
+|`INSP_SERVICES_NAME`     |`services` + `INSP_NET_SUFFIX`  |Name of the services host                   |
+|`INSP_SERVICES_IPADDR`   |`services`                      |IP or hostname of services                  |
+|`INSP_SERVICES_ALLOWMASK`|first container subnet          |CIDR of services source IP                  |
+|`INSP_SERVICES_HIDDEN`   |`no`                            |Hide services from `/MAP` and `/LINKS`      |
+|`INSP_SERVICES_SENDPASS` |no default                      |Password send by this server                |
+|`INSP_SERVICES_RECVPASS` |no default                      |Password send by the services               |
+|`INSP_SERVICES_PASSWORD` |no default                      |Alias for `sendpass` and `recvpass`         |
+|`INSP_SERVICES_TLS_ON`   |`no`                            |Turn on TLS encryption for the services link|
+|`INSP_SERVICES_OPTIONS`  |no default                      |Allows additional to set options to `<link>`|
+
+If you want to link `services.example.com` for example, you have to specify at least the `INSP_SERVICES_PASSWORD`:
+
+```consle
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_SERVICES_PASSWORD=somesecretpassword" inspircd/inspircd-docker
+```
+
+*Make sure you run the services and InspIRCd container on the same docker network or specify the correct `INSP_SERVICES_ALLOWMASK`*
+
+
 ## TLS
 
 ### Using self-generated certificates
