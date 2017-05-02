@@ -127,14 +127,23 @@ $ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd-docker
 
 You can customize the self-signed TLS certificate using the following environment variables:
 
-* `INSP_TLS_CN`
-* `INSP_TLS_MAIL`
-* `INSP_TLS_UNIT`
-* `INSP_TLS_ORG`
-* `INSP_TLS_LOC`
-* `INSP_TLS_STATE`
-* `INSP_TLS_COUNTRY`
-* `INSP_TLS_DURATION`
+|Available variables      |Default value                   |Description                                 |
+|-------------------------|--------------------------------|--------------------------------------------|
+|`INSP_TLS_CN`            |`irc.example.com`               |Common name of the certificate              |
+|`INSP_TLS_MAIL`          |`nomail@example.com`            |Mail address represented in the certificate |
+|`INSP_TLS_UNIT`          |`Server Admins`                 |Unit responsible for the service            |
+|`INSP_TLS_ORG`           |`Example IRC Network`           |Organisation name                           |
+|`INSP_TLS_LOC`           |`Example City`                  |City name                                   |
+|`INSP_TLS_STATE`         |`Example State`                 |State name                                  |
+|`INSP_TLS_COUNTRY`       |`XZ`                            |Country Code by [ISO 3166-1 ](https://en.wikipedia.org/wiki/ISO_3166-1)|
+|`INSP_TLS_DURATION`      |`365`                           |Duration until the certificate expires      |
+
+
+This will generate a self-signed certificate for `irc.example.org` instead of `irc.example.com`:
+
+```console
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_TLS_CN=irc.example.org" inspircd/inspircd-docker
+```
 
 ### Using secrets
 
