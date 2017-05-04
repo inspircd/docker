@@ -4,7 +4,7 @@
 
 InspIRCd is a modular Internet Relay Chat (IRC) server written in C++ for Linux, BSD, Windows and Mac OS X systems which was created from scratch to be stable, modern and lightweight.
 
-InspIRCd is one of only a few IRC servers to provide a tunable number of features through the use of an advanced but well documented module system. By keeping core functionality to a minimum we hope to increase the stability, security and speed of InspIRCd while also making it customisable to the needs of many different users.
+InspIRCd is one of only a few IRC servers to provide a tunable number of features through the use of an advanced but well-documented module system. By keeping core functionality to a minimum we hope to increase the stability, security, and speed of InspIRCd while also making it customizable to the needs of many different users.
 
 # Bootstrapping
 
@@ -16,9 +16,9 @@ To use it run the following statement:
 wget -qO- https://raw.githubusercontent.com/Adam-/inspircd-docker/master/bootstrap.sh | sh
 ```
 
-The bootstrap script takes care about the fact that docker is installed and runs the image.
+The bootstrap script takes care of the fact that docker is installed and runs the image.
 
-If port `6697` or `6667` are already in use another random port is used. Otherwise those ports are allocated by the container.
+If port `6697` or `6667` are already in use another random port is used. Otherwise, those ports are allocated by the container.
 
 # How to use this image
 
@@ -50,7 +50,7 @@ Default ports of this container image:
 
 ## Generated configuration
 
-Instead of including of your own configuration files, this container allows you to manipulate a few options of the default configuration by environment variables.
+Instead of including your own configuration files, this container allows you to manipulate a few options of the default configuration by environment variables.
 
 Use the following environment variables to configure your container:
 
@@ -58,9 +58,9 @@ Use the following environment variables to configure your container:
 |-------------------------|--------------------------------|--------------------------------------------|
 |`INSP_NET_SUFFIX`        |`.example.com`                  |Suffix used behind the server name          |
 |`INSP_NET_NAME`          |`Omega`                         |Name advertised as network name             |
-|`INSP_SERVER_NAME`       |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be a FQDN       |
-|`INSP_ADMIN_NAME`        |`Jonny English`                 |Name shown by the `/admin` command          |
-|`INSP_ADMIN_NICK`        |`MI5`                           |Nick shown by the `/admin` command          |
+|`INSP_SERVER_NAME`       |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be an FQDN      |
+|`INSP_ADMIN_NAME`        |`Jonny English`                 |Name showed by the `/admin` command          |
+|`INSP_ADMIN_NICK`        |`MI5`                           |Nick showed by the `/admin` command          |
 |`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command        |
 |`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs               |
 
@@ -74,7 +74,7 @@ $ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspir
 
 We provide two possibly ways to define a default oper for the server. 
 
-If neither `INSP_OPER_PASSWORD_HASH`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will provided to keep your server secure.
+If neither `INSP_OPER_PASSWORD_HASH`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will be provided to keep your server secure.
 
 Further details see official [`opers.conf` docs](https://github.com/inspircd/inspircd/blob/insp20/docs/conf/opers.conf.example#L77-L165).
 
@@ -228,7 +228,7 @@ docker build --build-arg "BUILD_DEPENDENCIES=geoip-dev pcre-dev" --build-arg "RU
 
 ## Building additional modules
 
-In case you want to develop InspIRCd modules it is useful to run InspIRCd with modules which neither exist in core modules nor in extras.
+In case you want to develop InspIRCd modules, it is useful to run InspIRCd with modules which neither exist in core modules nor in extras.
 
 You can put the sources these modules in the modules directory of this repository. They are automatically copied to the modules directory of InspIRCd.
 
@@ -257,7 +257,7 @@ We provide information about features we remove in future.
 
 ## Breaking changes
 
-We document changes that possibly broken your setup and are no longer supported. Hopefully we can provide useful information for debugging.
+We document changes that possibly broken your setup and are no longer supported. Hopefully, we can provide useful information for debugging.
 
 * [`cdba94f`](https://github.com/Adam-/inspircd-docker/commit/cdba94f6ae0c71ad37b3a88114a14ecb0c5177c1) `ADDPACKAGES` and `DELPACKAGES` are replaced by `BUILD_DEPENDENCIES` and `RUN_DEPENDENCIES`
 
@@ -291,4 +291,4 @@ You can also reach many of the project maintainers via the `#inspircd` IRC chann
 
 ## Contributing
 
-You are invited to contribute new features, fixes, or updates, large or small; we are always thrilled to receive pull requests, and do our best to process them as fast as we can.
+You are invited to contribute new features, fixes, or updates, large or small; we are always thrilled to receive pull requests and do our best to process them as fast as we can.
