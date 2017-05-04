@@ -2,10 +2,13 @@
 Sheogorath
 InspIRCd
 Chatspike
+Anope
+Atheme
+EFnet
+DroneBL
 
 # Technical terms
 inspircd-extras
 DNSBLs
-EFnet
-DroneBL
 oper
+hostname
