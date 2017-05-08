@@ -54,15 +54,15 @@ Instead of including your own configuration files, this container allows you to 
 
 Use the following environment variables to configure your container:
 
-|Available variables      |Default value                   |Description                                 |
-|-------------------------|--------------------------------|--------------------------------------------|
-|`INSP_NET_SUFFIX`        |`.example.com`                  |Suffix used behind the server name          |
-|`INSP_NET_NAME`          |`Omega`                         |Name advertised as network name             |
-|`INSP_SERVER_NAME`       |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be an FQDN      |
-|`INSP_ADMIN_NAME`        |`Jonny English`                 |Name showed by the `/admin` command          |
-|`INSP_ADMIN_NICK`        |`MI5`                           |Nick showed by the `/admin` command          |
-|`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command        |
-|`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs               |
+|Available variables      |Default value                   |Description                                   |
+|-------------------------|--------------------------------|----------------------------------------------|
+|`INSP_NET_SUFFIX`        |`.example.com`                  |Suffix used behind the server name            |
+|`INSP_NET_NAME`          |`Omega`                         |Name advertised as network name               |
+|`INSP_SERVER_NAME`       |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be an FQDN        |
+|`INSP_ADMIN_NAME`        |`Jonny English`                 |Name showed by the `/admin` command           |
+|`INSP_ADMIN_NICK`        |`MI5`                           |Nick showed by the `/admin` command           |
+|`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command          |
+|`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs                 |
 
 A quick example how to use the environment variables:
 
@@ -84,14 +84,14 @@ A normal password authentication uses `/oper <opername> <password>` (everything 
 
 To generate a password hash connect to the network and use `/mkpasswd <hash-type> <password>`.
 
-|Available variables      |Default value                   |Description                                 |
-|-------------------------|--------------------------------|--------------------------------------------|
-|`INSP_OPER_NAME`         |`oper`                          |Oper name                                   |
-|`INSP_OPER_PASSWORD_HASH`|no default                      |Hash value for your oper password hash      |
-|`INSP_OPER_HOST`         |`*@*`                           |Hosts allowed to oper up                    |
-|`INSP_OPER_HASH`         |`hmac-sha256`                   |Hashing algorithm for `INSP_OPER_PASSWORD`  |
-|`INSP_OPER_SSLONLY`      |`yes`                           |Allow oper up only while using TLS          |
-|`INSP_OPER_PASSWORD`     |no default                      |(deprecated) Alias `INSP_OPER_PASSWORD_HASH`|
+|Available variables      |Default value                   |Description                                   |
+|-------------------------|--------------------------------|----------------------------------------------|
+|`INSP_OPER_NAME`         |`oper`                          |Oper name                                     |
+|`INSP_OPER_PASSWORD_HASH`|no default                      |Hash value for your oper password hash        |
+|`INSP_OPER_HOST`         |`*@*`                           |Hosts allowed to oper up                      |
+|`INSP_OPER_HASH`         |`hmac-sha256`                   |Hashing algorithm for `INSP_OPER_PASSWORD`    |
+|`INSP_OPER_SSLONLY`      |`yes`                           |Allow oper up only while using TLS            |
+|`INSP_OPER_PASSWORD`     |no default                      |(deprecated) Alias `INSP_OPER_PASSWORD_HASH`  |
 
 
 For example to oper up with `/oper oper s3cret` you would run the following line:
@@ -108,14 +108,36 @@ This way only works using TLS connection and uses a client certificate for authe
 
 Provide the SHA256 fingerprint of the certificate as `INSP_OPER_FINGERPRINT` to configure it.
 
-|Available variables      |Default value                   |Description                                 |
-|-------------------------|--------------------------------|--------------------------------------------|
-|`INSP_OPER_NAME`         |`oper`                          |Oper name for usage with `/oper`            |
-|`INSP_OPER_FINGERPRINT`  |no default                      |Oper TLS fingerprint (SHA256)               |
-|`INSP_OPER_AUTOLOGIN`    |`yes`                           |Automatic login of with TLS fingerprint     |
+|Available variables      |Default value                   |Description                                   |
+|-------------------------|--------------------------------|----------------------------------------------|
+|`INSP_OPER_NAME`         |`oper`                          |Oper name for usage with `/oper`              |
+|`INSP_OPER_FINGERPRINT`  |no default                      |Oper TLS fingerprint (SHA256)                 |
+|`INSP_OPER_AUTOLOGIN`    |`yes`                           |Automatic login of with TLS fingerprint       |
 
 
 ## Linking servers and services
+
+### Links
+
+With this container you can link other servers. To do so you have to define a few environment variables.
+
+Currently we allow 3 links per container. Those link variables are `INSP_LINK1_*`, `INSP_LINK2_*`, and `INSP_LINK3_*`.
+
+We only list the possible options once, but they work for `INSP_LINK1_*`, as well as for `INSP_LINK2_*` and `INSP_LINK3_*`.
+
+|Available variables      |Default value                   |Description                                   |
+|-------------------------|--------------------------------|----------------------------------------------|
+|`INSP_LINK1_NAME`        |no default                      |Name of the remote server (`INSP_SERVER_NAME`)|
+|`INSP_LINK1_IPADDR`      |no default                      |IP or hostname of the remote server           |
+|`INSP_LINK1_PORT`        |`7001` (TLS) or `7000`          |Port used to connect the remote server        |
+|`INSP_LINK1_SENDPASS`    |no default                      |Password send by this server                  |
+|`INSP_LINK1_RECVPASS`    |no default                      |Password send by remote server                |
+|`INSP_LINK1_PASSWORD`    |no default                      |Alias for `sendpass` and `recvpass`           |
+|`INSP_LINK1_ALLOWMASK`   |first container subnet          |CIDR of remote server's IP address            |
+|`INSP_LINK1_TLS_ON`      |`yes`                           |Turn on TLS encryption for the link           |
+|`INSP_LINK1_FINGERPRINT` |no default                      |TLS Fingerprint of the remote server (SHA256) |
+|`INSP_LINK1_OPTIONS`     |no default                      |Allows additional to set options to `<link>`  |
+|`INSP_LINK1_AUTOCONNECT` |`yes`                           |Enables `<autoconnect>` for this link         |
 
 ### Services
 
@@ -123,17 +145,17 @@ This image allows you to configure services link blocks by environment variables
 
 This way you can easily connect [Anope](https://www.anope.org/) or [Atheme](http://atheme.net/) to your InspIRCd container.
 
-|Available variables      |Default value                   |Description                                 |
-|-------------------------|--------------------------------|--------------------------------------------|
-|`INSP_SERVICES_NAME`     |`services` + `INSP_NET_SUFFIX`  |Name of the services host                   |
-|`INSP_SERVICES_IPADDR`   |`services`                      |IP or hostname of services                  |
-|`INSP_SERVICES_ALLOWMASK`|first container subnet          |CIDR of services source IP                  |
-|`INSP_SERVICES_HIDDEN`   |`no`                            |Hide services from `/MAP` and `/LINKS`      |
-|`INSP_SERVICES_SENDPASS` |no default                      |Password send by this server                |
-|`INSP_SERVICES_RECVPASS` |no default                      |Password send by the services               |
-|`INSP_SERVICES_PASSWORD` |no default                      |Alias for `sendpass` and `recvpass`         |
-|`INSP_SERVICES_TLS_ON`   |`no`                            |Turn on TLS encryption for the services link|
-|`INSP_SERVICES_OPTIONS`  |no default                      |Allows additional to set options to `<link>`|
+|Available variables      |Default value                   |Description                                   |
+|-------------------------|--------------------------------|----------------------------------------------|
+|`INSP_SERVICES_NAME`     |`services` + `INSP_NET_SUFFIX`  |Name of the services host                     |
+|`INSP_SERVICES_IPADDR`   |`services`                      |IP or hostname of services                    |
+|`INSP_SERVICES_ALLOWMASK`|first container subnet          |CIDR of services source IP                    |
+|`INSP_SERVICES_HIDDEN`   |`no`                            |Hide services from `/MAP` and `/LINKS`        |
+|`INSP_SERVICES_SENDPASS` |no default                      |Password send by this server                  |
+|`INSP_SERVICES_RECVPASS` |no default                      |Password send by the services                 |
+|`INSP_SERVICES_PASSWORD` |no default                      |Alias for `sendpass` and `recvpass`           |
+|`INSP_SERVICES_TLS_ON`   |`no`                            |Turn on TLS encryption for the services link  |
+|`INSP_SERVICES_OPTIONS`  |no default                      |Allows additional to set options to `<link>`  |
 
 If you want to link `services.example.com` for example, you have to specify at least the `INSP_SERVICES_PASSWORD`:
 
@@ -156,16 +178,16 @@ $ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd-docker
 
 You can customize the self-signed TLS certificate using the following environment variables:
 
-|Available variables      |Default value                   |Description                                 |
-|-------------------------|--------------------------------|--------------------------------------------|
-|`INSP_TLS_CN`            |`irc.example.com`               |Common name of the certificate              |
-|`INSP_TLS_MAIL`          |`nomail@example.com`            |Mail address represented in the certificate |
-|`INSP_TLS_UNIT`          |`Server Admins`                 |Unit responsible for the service            |
-|`INSP_TLS_ORG`           |`Example IRC Network`           |Organisation name                           |
-|`INSP_TLS_LOC`           |`Example City`                  |City name                                   |
-|`INSP_TLS_STATE`         |`Example State`                 |State name                                  |
+|Available variables      |Default value                   |Description                                   |
+|-------------------------|--------------------------------|----------------------------------------------|
+|`INSP_TLS_CN`            |`irc.example.com`               |Common name of the certificate                |
+|`INSP_TLS_MAIL`          |`nomail@example.com`            |Mail address represented in the certificate   |
+|`INSP_TLS_UNIT`          |`Server Admins`                 |Unit responsible for the service              |
+|`INSP_TLS_ORG`           |`Example IRC Network`           |Organisation name                             |
+|`INSP_TLS_LOC`           |`Example City`                  |City name                                     |
+|`INSP_TLS_STATE`         |`Example State`                 |State name                                    |
 |`INSP_TLS_COUNTRY`       |`XZ`                            |Country Code by [ISO 3166-1 ](https://en.wikipedia.org/wiki/ISO_3166-1)|
-|`INSP_TLS_DURATION`      |`365`                           |Duration until the certificate expires      |
+|`INSP_TLS_DURATION`      |`365`                           |Duration until the certificate expires        |
 
 
 This will generate a self-signed certificate for `irc.example.org` instead of `irc.example.com`:
