@@ -34,8 +34,19 @@ fi
 RUNPARAM="-d"
 
 # Check for available ports
-[ "$(netstat -ln | grep -c :6667)" -eq 0 ] && RUNPARAM="$RUNPARAM -p 6667:6667" || RUNPARAM="$RUNPARAM -p 6667" echo "exposing 6667 on random port. Check \'docker ps\' for details"
-[ "$(netstat -ln grep -c :6697)" -eq 0 ] && RUNPARAM="$RUNPARAM -p 6697:6697" || RUNPARAM="$RUNPARAM -p 6697" echo "exposing 6697 on random port. Check \'docker ps\' for details"
+if [ "$(netstat -ln | grep -c :6667)" -eq 0 ]; then
+   RUNPARAM="$RUNPARAM -p 6667:6667"
+else
+   RUNPARAM="$RUNPARAM -p 6667"
+   echo "exposing 6667 on random port. Check \'docker ps\' for details"
+fi
+
+if [ "$(netstat -ln | grep -c :6697)" -eq 0 ]; then
+   RUNPARAM="$RUNPARAM -p 6697:6697"
+else
+   RUNPARAM="$RUNPARAM -p 6697"
+   echo "exposing 6697 on random port. Check \'docker ps\' for details"
+fi
 
 # shellcheck disable=SC2086
 $SUDO docker run $RUNPARAM inspircd/inspircd-docker
