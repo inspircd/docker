@@ -17,9 +17,9 @@ VERSION=${2}
 
 
 if [ "$VERSION" != "" ]; then
-    docker tag inspircd:testing "$PREFIX:$(echo "${VERSION}" | cut -d. -f1)${SUFFIX}"
-    docker tag inspircd:testing "$PREFIX:$(echo "${VERSION}" | cut -d. -f1-2)${SUFFIX}"
-    docker tag inspircd:testing "$PREFIX:$(echo "${VERSION}" | cut -d. -f1-3)${SUFFIX}"
+    docker tag inspircd:testing "$PREFIX:$(echo "${VERSION}" | sed -e 's/^v//' | cut -d. -f1)${SUFFIX}"
+    docker tag inspircd:testing "$PREFIX:$(echo "${VERSION}" | sed -e 's/^v//' | cut -d. -f1-2)${SUFFIX}"
+    docker tag inspircd:testing "$PREFIX:$(echo "${VERSION}" | sed -e 's/^v//' | cut -d. -f1-3)${SUFFIX}"
     [ "$SUFFIX" = "" ] && docker tag inspircd:testing "$PREFIX:latest"
 else
     echo "No version provided. Skipping tagging..."
