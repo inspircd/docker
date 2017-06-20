@@ -18,13 +18,17 @@ DOCKERNETWORK=$(docker network create linkingTestNet)
 # Run first instance of InspIRCd to connect to.
 DOCKERCONTAINER1=$(docker run -d --name test1 --network linkingTestNet -e INSP_SERVER_NAME="test1.example.com" -e INSP_LINK1_NAME="test2.example.com" -e INSP_LINK1_PASSWORD="test" -e INSP_LINK1_IPADDR="test2" inspircd:testing)
 
+sleep 5
+
 # Run seconds InspIRCd instance
 DOCKERCONTAINER2=$(docker run -d --name test2 --network linkingTestNet -e INSP_SERVER_NAME="test2.example.com" -e INSP_LINK1_NAME="test1.example.com" -e INSP_LINK1_PASSWORD="test" -e INSP_LINK1_IPADDR="test1" inspircd:testing)
 
-sleep 35
+sleep 10
 
 # Check logs of the deamons
-docker logs "$DOCKERCONTAINER1" | grep "LINK:.*Received.*end.*of.*netburst.*from.*test2.example.com"
+if ! docker logs "$DOCKERCONTAINER1" | grep "LINK:.*Received.*end.*of.*netburst.*from.*test2.example.com"; then
+    sleep 60;
+fi
 docker logs "$DOCKERCONTAINER2" | grep "LINK:.*Received.*end.*of.*netburst.*from.*test1.example.com"
 
 # Clean up
