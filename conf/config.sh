@@ -23,4 +23,9 @@ if [ -d conf.d ]; then
     find conf.d/*.conf | while read -r file; do echo "<include file=\"$file\">"; done
 fi
 
+# Include custom configurations from docker secrets. (For example for further oper configs)
+if [ -d /run/secrets ]; then
+    find /run/secrets/*.conf | while read -r file; do echo "<include file=\"$file\">"; done
+fi
+
 # Space for further configs

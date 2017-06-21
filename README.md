@@ -230,6 +230,18 @@ $ docker run --name inspircd -p 6667:6667 -v /path/to/your/configs:/inspircd/con
 copy or mount it to `/inspircd/conf/` instead of `/inspircd/conf.d/`.*
 
 
+### Using secrets
+
+Additional to the `conf.d/` directory we offer a automated includes for all `.conf` files that are mounted as secrets.
+
+For example to add your own oper configuration.
+
+```console
+docker secret create secret-opers /path/to/your/opers.conf
+
+docker service create --name inspircd --secret secret-opers inspircd/inspircd-docker
+```
+
 # Build extras
 
 To build extra modules you can use the `--build-arg` statement.
