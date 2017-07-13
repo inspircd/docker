@@ -1,5 +1,15 @@
 #!/bin/sh
 
+########################################
+###                                  ###
+### DON'T EDIT THIS FILE AFTER BUILD ###
+###                                  ###
+###    USE ENVIRONMENT VARIABLES     ###
+###              INSTEAD             ###
+###                                  ###
+########################################
+
+
 # generateLinkBlock <NAME> <IPADDR> <PORT> <SENDPASS> <RECVPASS> <ALLOWMASK> <MORE>
 generateLinkBlock() {
 if [ "$6" = "" ]; then
