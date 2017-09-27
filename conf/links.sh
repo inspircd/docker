@@ -13,7 +13,7 @@
 # generateLinkBlock <NAME> <IPADDR> <PORT> <SENDPASS> <RECVPASS> <ALLOWMASK> <MORE>
 generateLinkBlock() {
 if [ "$6" = "" ]; then
-    echo "<die reason value=\"Wrong configured link block. Please check your configs! For details see: https://github.com/adam-/inspircd-docker#linking-servers-and-services\">"
+    echo "<die reason value=\"Wrong configured link block. Please check your configs! For details see: https://github.com/inspircd/inspircd-docker#linking-servers-and-services\">"
     exit 1
 fi
 cat <<EOF
