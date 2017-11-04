@@ -37,7 +37,7 @@ echo "<module name=\"m_cban.so\">" >"$TESTFILE"
 SECRETCONFIG=$(docker secret create test-config  "$TESTFILE")
 
 # Run service with configs attached
-DOCKERSERVICE=$(docker service create -p "${CLIENT_PORT}:6667" -p "${TLS_CLIENT_PORT}:6697" --secret source=test-config,target=test.conf inspircd:testing)
+DOCKERSERVICE=$(docker service create -q -d -p "${CLIENT_PORT}:6667" -p "${TLS_CLIENT_PORT}:6697" --secret source=test-config,target=test.conf inspircd:testing)
 
 sleep 40
 
