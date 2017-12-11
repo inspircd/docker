@@ -1,4 +1,4 @@
-FROM alpine:3.6
+FROM alpine:3.7
 
 LABEL maintainer1="Adam <adam@anope.org>" \
       maintainer2="Sheogorath <sheogorath@shivering-isles.com>"
