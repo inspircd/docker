@@ -63,12 +63,21 @@ Use the following environment variables to configure your container:
 |`INSP_ADMIN_NICK`        |`MI5`                           |Nick showed by the `/admin` command           |
 |`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command          |
 |`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs                 |
+|`INSP_CONNECT_PASSWORD`  |`` (empty)                      |Enables a server password, empty to disable   |
+|`INSP_CONNECT_HASH`      |`` (empty)                      |If set, what hash used for the password       |
 
 A quick example how to use the environment variables:
 
 ```console
 $ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspircd/inspircd-docker
 ```
+
+To use connect password `s3cret` stored with `hmac-sha256`:
+```console
+$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_HASH=hmac-sha256" -e "INSP_CONNECT_PASSWORD=mlknZfDb\$C5E0lXKxdoHFxmsJEfSNe8Ct4XG25slv2WiJvUnnWew" inspircd/inspircd-docker
+```
+*Make sure you escape special chars like `$` or `&` if needed. If you are using `docker-compose` you might need to double escape and use double-dollar signs*
+
 
 ## Oper
 
