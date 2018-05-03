@@ -63,8 +63,8 @@ Use the following environment variables to configure your container:
 |`INSP_ADMIN_NICK`        |`MI5`                           |Nick showed by the `/admin` command           |
 |`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command          |
 |`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs                 |
-|`INSP_CONNECT_PASSWORD`  |`` (empty)                      |Enables a server password, empty to disable   |
-|`INSP_CONNECT_HASH`      |`` (empty)                      |If set, what hash used for the password       |
+|`INSP_CONNECT_PASSWORD`  |no default                      |Password eiter as plaintext, or hash value    |
+|`INSP_CONNECT_HASH`      |no default                      |Hashing algorithm for `INSP_CONNECT_PASSWORD` |
 
 A quick example how to use the environment variables:
 
