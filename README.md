@@ -63,12 +63,31 @@ Use the following environment variables to configure your container:
 |`INSP_ADMIN_NICK`        |`MI5`                           |Nick showed by the `/admin` command           |
 |`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command          |
 |`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs                 |
+|`INSP_CONNECT_PASSWORD`  |no default                      |Password either as plaintext, or hash value   |
+|`INSP_CONNECT_HASH`      |no default                      |Hashing algorithm for `INSP_CONNECT_PASSWORD` |
 
 A quick example how to use the environment variables:
 
 ```console
 $ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspircd/inspircd-docker
 ```
+
+### Password authentication
+
+You can either set a plaintext password or a hashed password. If you leave `INSP_CONNECT_HASH` unset, the password will be used as a plaintext password.
+
+To use connect password `s3cret` stored in plaintext:
+```console
+$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_PASSWORD=s3cret" inspircd/inspircd-docker
+```
+
+To use connect password `s3cret` stored with `hmac-sha256`:
+```console
+$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_HASH=hmac-sha256" -e "INSP_CONNECT_PASSWORD=mlknZfDb\$C5E0lXKxdoHFxmsJEfSNe8Ct4XG25slv2WiJvUnnWew" inspircd/inspircd-docker
+```
+
+*Make sure you escape special chars like `$` or `&` if needed. If you are using `docker-compose` you might need to double escape and use double-dollar signs*
+
 
 ## Oper
 
