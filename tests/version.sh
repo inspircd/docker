@@ -5,7 +5,7 @@ echo "
          ######################################
 "
 
-DOCKERFILE=${1:-Dockerfile}
+DOCKERFILE="${1:-Dockerfile}"
 
 
 # Check for command existence

@@ -11,7 +11,7 @@ echo "
 set -e
 
 # shellcheck source=tests/.portconfig.sh
-. $(dirname "$0")/.portconfig.sh
+. "$(dirname "$0")/.portconfig.sh"
 
 # Create config directory for testing
 mkdir /tmp/test-mountConfig/ && sudo chown 10000 /tmp/test-mountConfig/
