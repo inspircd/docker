@@ -10,7 +10,7 @@ echo "
 set -e
 
 # shellcheck source=tests/.portconfig.sh
-. $(dirname "$0")/.portconfig.sh
+. "$(dirname "$0")/.portconfig.sh"
 
 # Create a network where the containers will run on
 DOCKERNETWORK=$(docker network create linkingTestNet)

@@ -10,7 +10,7 @@ echo "
 set -e
 
 # shellcheck source=tests/.portconfig.sh
-. $(dirname "$0")/.portconfig.sh
+. "$(dirname "$0")/.portconfig.sh"
 
 # Run container in a simple way
 DOCKERCONTAINER=$(docker run -d -p "127.0.0.1:${CLIENT_PORT}:6667" -p "127.0.0.1:${TLS_CLIENT_PORT}:6697" inspircd:testing)

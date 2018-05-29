@@ -11,7 +11,7 @@ echo "
 set -e
 
 # shellcheck source=tests/.portconfig.sh
-. $(dirname "$0")/.portconfig.sh
+. "$(dirname "$0")/.portconfig.sh"
 
 # Helpfunction for version compare
 version_ge() { test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || test "$1" = "$2"; }

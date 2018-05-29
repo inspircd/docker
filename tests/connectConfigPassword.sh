@@ -11,7 +11,7 @@ echo "
 set -e
 
 # shellcheck source=tests/.portconfig.sh
-. $(dirname "$0")/.portconfig.sh
+. "$(dirname "$0")/.portconfig.sh"
 
 TESTFILE=$(mktemp /tmp/connectConfigPassword.XXXXX)
 

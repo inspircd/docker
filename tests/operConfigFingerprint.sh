@@ -11,9 +11,9 @@ echo "
 set -e
 
 # shellcheck source=tests/.portconfig.sh
-. $(dirname "$0")/.portconfig.sh
+. "$(dirname "$0")/.portconfig.sh"
 
-TESTFILE=$(mktemp /tmp/operConfigFingerprint.XXXXXX)
+TESTFILE="$(mktemp /tmp/operConfigFingerprint.XXXXXX)"
 
 OPERNAME=Alice
 OPERFINGERPRINT=bob

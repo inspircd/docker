@@ -10,7 +10,7 @@ echo "
 set -e
 
 # shellcheck source=tests/.portconfig.sh
-. $(dirname "$0")/.portconfig.sh
+. "$(dirname "$0")/.portconfig.sh"
 
 # Create config directory for testing
 TESTDIR=/tmp/test-customBuild/
