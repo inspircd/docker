@@ -54,4 +54,4 @@ EOF
 fi
 
 
-/inspircd/bin/inspircd --nofork $@
+exec /inspircd/bin/inspircd --nofork $@
