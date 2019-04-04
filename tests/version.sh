@@ -34,9 +34,11 @@ command_exits wget
 
 [ -e "$DOCKERFILE" ] || { echo >&2 "File '$DOCKERFILE' doesn't exist.  Aborting."; exit 1; }
 
-if version_ge "$(docker_base_version "$DOCKERFILE")" "$(docker_image_latest_tag "$(docker_base_name "$DOCKERFILE")")"; then
+REMOTE_VERSION=$(docker_image_latest_tag "$(docker_base_name "$DOCKERFILE")")
+
+if version_ge "$(docker_base_version "$DOCKERFILE")" "$REMOTE_VERSION"; then
     echo "Base image is up to date! Test successful."
 else
-    echo >&2 "A newer base image is available! Please update."
+    echo >&2 "A newer base image ($REMOTE_VERSION) is available! Please update."
     exit 1
 fi
