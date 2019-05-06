@@ -1,6 +1,6 @@
 FROM alpine:3.9 as builder
 
-ARG VERSION=v3.0.0
+ARG VERSION=insp3
 
 # Stage 0: Build from source
 RUN apk add --no-cache --virtual .build-utils gcc g++ make git pkgconfig perl \
@@ -13,7 +13,7 @@ RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 RUN git clone https://github.com/inspircd/inspircd.git inspircd
 
 WORKDIR /inspircd
-RUN git checkout tags/$VERSION
+RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
 ## TODO add module support here
 
