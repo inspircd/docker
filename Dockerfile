@@ -20,11 +20,9 @@ RUN git checkout tags/$VERSION
 RUN ./configure --disable-interactive --uid 10000 --gid 10000
 RUN make -j install
 
-## Modify configs (bad practice to just delete the die lines...)
-WORKDIR /inspircd/run/conf
-RUN cp examples/inspircd.conf.example ./inspircd.conf
-RUN sed -i '/<die/d' examples/opers.conf.example
-RUN sed -i '/<die/d' examples/links.conf.example
+## Replace vanilla config files with the ones in this repo
+RUN rm -rf /inspircd/run/conf/
+COPY conf/ /inspircd/run/conf/
 
 # Stage 1: Create optimized runtime container
 FROM alpine:3.9

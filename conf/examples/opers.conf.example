@@ -1,0 +1,181 @@
+#-#-#-#-#-#-#-#-#-#-#-#-#  CLASS CONFIGURATION  #-#-#-#-#-#-#-#-#-#-#-#
+#                                                                     #
+#   Classes are a group of commands which are grouped together and    #
+#   given a unique name. They're used to define which commands        #
+#   are available to certain types of Operators.                      #
+#                                                                     #
+#                                                                     #
+#  Note: It is possible to make a class which covers all available    #
+#  commands. To do this, specify commands="*". This is not really     #
+#  recommended, as it negates the whole purpose of the class system,  #
+#  however it is provided for fast configuration (e.g. in test nets). #
+#                                                                     #
+
+<class
+     name="Shutdown"
+
+     # commands: Oper-only commands that opers of this class can run.
+     commands="DIE RESTART REHASH LOADMODULE UNLOADMODULE RELOADMODULE GLOADMODULE GUNLOADMODULE GRELOADMODULE"
+
+     # privs: Special privileges that users with this class may utilise.
+     #  VIEWING:
+     #   - channels/auspex: allows opers with this priv to see more details about channels than normal users.
+     #   - users/auspex: allows opers with this priv to view more details about users than normal users, e.g. real host and IP.
+     #   - users/channel-spy: allows opers with this priv to view the private/secret channels that a user is on.
+     #   - servers/auspex: allows opers with this priv to see more details about server information than normal users.
+     #  ACTIONS:
+     #   - users/mass-message: allows opers with this priv to PRIVMSG and NOTICE to a server mask (e.g. NOTICE $*).
+     #   - users/samode-usermodes: allows opers with this priv to change the user modes of any other user using /SAMODE.
+     #  PERMISSIONS:
+     #   - channels/ignore-noctcp: allows opers with this priv to send a CTCP to a +C channel.
+     #   - channels/ignore-nonicks: allows opers with this priv to change their nick when on a +N channel.
+     #   - channels/restricted-create: allows opers with this priv to create channels if the restrictchans module is loaded.
+     #   - users/flood/increased-buffers: allows opers with this priv to send and receive data without worrying about being disconnected for exceeding limits (*NOTE).
+     #   - users/flood/no-fakelag: prevents opers from being penalized with fake lag for flooding (*NOTE).
+     #   - users/flood/no-throttle: allows opers with this priv to send commands without being throttled (*NOTE).
+     #   - users/ignore-callerid: allows opers with this priv to message people using callerid without being on their callerid list.
+     #   - users/ignore-commonchans: allows opers with this priv to send a message to a +c user without sharing common channels.
+     #   - users/ignore-noctcp: allows opers with this priv to send a CTCP to a +T user.
+     #   - users/ignore-privdeaf: allows opers with this priv to message users with +D set.
+     #   - users/sajoin-others: allows opers with this priv to /SAJOIN users other than themselves.
+     #   - servers/use-disabled-commands: allows opers with this priv to use disabled commands.
+     #   - servers/use-disabled-modes: allows opers with this priv to use disabled modes.
+     #
+     # *NOTE: These privs are potentially dangerous, as they grant users with them the ability to hammer your server's CPU/RAM as much as they want, essentially.
+     privs="users/auspex channels/auspex servers/auspex users/mass-message users/flood/no-throttle users/flood/increased-buffers"
+
+     # usermodes: Oper-only user modes that opers with this class can use.
+     usermodes="*"
+
+     # chanmodes: Oper-only channel modes that opers with this class can use.
+     chanmodes="*">
+
+<class name="SACommands" commands="SAJOIN SAPART SANICK SAQUIT SATOPIC SAKICK SAMODE OJOIN">
+<class name="ServerLink" commands="CONNECT SQUIT RCONNECT RSQUIT MKPASSWD ALLTIME SWHOIS LOCKSERV UNLOCKSERV" usermodes="*" chanmodes="*" privs="servers/auspex">
+<class name="BanControl" commands="KILL GLINE KLINE ZLINE QLINE ELINE TLINE RLINE CHECK NICKLOCK NICKUNLOCK SHUN CLONES CBAN" usermodes="*" chanmodes="*">
+<class name="OperChat" commands="WALLOPS GLOBOPS" usermodes="*" chanmodes="*" privs="users/mass-message">
+<class name="HostCloak" commands="SETHOST SETIDENT SETIDLE CHGNAME CHGHOST CHGIDENT" usermodes="*" chanmodes="*" privs="users/auspex">
+
+
+#-#-#-#-#-#-#-#-#-#-#-#-  OPERATOR COMPOSITION   -#-#-#-#-#-#-#-#-#-#-#
+#                                                                     #
+#   This is where you specify which types of operators you have on    #
+#   your server, as well as the commands they are allowed to use.     #
+#   This works alongside with the classes specified above.            #
+#                                                                     #
+
+<type
+    # name: Name of the type. Used in actual server operator accounts below.
+    name="NetAdmin"
+
+    # classes: Classes (blocks above) that this type belongs to.
+    classes="SACommands OperChat BanControl HostCloak Shutdown ServerLink"
+
+    # vhost: Host that opers of this type get when they log in (oper up). This is optional.
+    vhost="netadmin.omega.example.org"
+
+    # maxchans: Maximum number of channels opers of this type can be in at once.
+    maxchans="60"
+
+    # modes: User modes besides +o that are set on an oper of this type
+    # when they oper up. Used for snomasks and other things.
+    # Requires the opermodes module to be loaded.
+    modes="+s +cCqQ">
+
+<type name="GlobalOp" classes="SACommands OperChat BanControl HostCloak ServerLink" vhost="serverop.omega.example.org">
+<type name="Helper" classes="HostCloak" vhost="helper.omega.example.org">
+
+
+#-#-#-#-#-#-#-#-#-#-#-  OPERATOR CONFIGURATION   -#-#-#-#-#-#-#-#-#-#-#
+#                                                                     #
+#   Opers are defined here. This is a very important section.         #
+#   Remember to only make operators out of trustworthy people.        #
+#                                                                     #
+
+# Operator account with a plaintext password.
+<oper
+      # name: Oper login that is used to oper up (/OPER <username> <password>).
+      # Remember: This is case sensitive.
+      name="Attila"
+
+      # password: Case-sensitive, unhashed (plaintext).
+      password="s3cret"
+
+      # host: What hostnames and IPs are allowed to use this operator account.
+      # Multiple options can be separated by spaces and CIDRs are allowed.
+      # You can use just * or *@* for this section, but it is not recommended
+      # for security reasons.
+      host="attila@inspircd.org *@2001:db8::/32"
+
+      # ** ADVANCED ** This option is disabled by default.
+      # fingerprint: When using the sslinfo module, you may specify
+      # a key fingerprint here. This can be obtained by using the /SSLINFO
+      # command while the module is loaded, and is also noticed on connect.
+      # This enhances security by verifying that the person opering up has
+      # a matching SSL client certificate, which is very difficult to
+      # forge (impossible unless preimage attacks on the hash exist).
+      # If the sslinfo module isn't loaded, this option will be ignored.
+      #fingerprint="67cb9dc013248a829bb2171ed11becd4"
+
+      # autologin: If an SSL certificate fingerprint for this oper is specified,
+      # you can have the oper block automatically log in. This moves all security
+      # of the oper block to the protection of the client certificate, so be sure
+      # that the private key is well-protected! Requires the sslinfo module.
+      #autologin="on"
+
+      # sslonly: If on, this oper can only oper up if they're using an SSL connection.
+      # Setting this option adds a decent bit of security. Highly recommended
+      # if the oper is on wifi, or specifically, unsecured wifi. Note that it
+      # is redundant to specify this option if you specify a fingerprint.
+      # This setting only takes effect if the sslinfo module is loaded.
+      #sslonly="yes"
+
+      # vhost: Overrides the vhost in the type block. Class and modes may also
+      # be overridden.
+      vhost="attila.example.org"
+
+      # type: Which type of operator this person is; see the block
+      # above for the list of types. NOTE: This is case-sensitive as well.
+      type="NetAdmin">
+
+# Operator with a plaintext password and no comments, for easy copy & paste.
+<oper
+      name="Brain"
+      password="youshouldhashthis"
+      host="brain@dialup15.isp.test.com *@localhost *@example.com *@2001:db8::/32"
+      #fingerprint="67cb9dc013248a829bb2171ed11becd4"
+      type="NetAdmin">
+
+# Operator with a hashed password. It is highly recommended to use hashed passwords.
+<oper
+      # name: Oper login that is used to oper up (/OPER <username> <password>).
+      # Remember: This is case sensitive.
+      name="Adam"
+
+      # hash: The hash function this password is hashed with. Requires the
+      # module for the selected function (bcrypt, md5, sha1, or sha256) and
+      # the password hashing module (password_hash) to be loaded.
+      #
+      # You may also use any of the above other than bcrypt prefixed with
+      # either "hmac-" or "pbkdf2-hmac-" (requires the pbkdf2 module).
+      # Create hashed passwords with: /MKPASSWD <hashtype> <plaintext>.
+      hash="bcrypt"
+
+      # password: A hash of the password (see above option) hashed
+      # with /MKPASSWD <hashtype> <plaintext>. See the password_hash module
+      # in modules.conf for more information about password hashing.
+      password="qQmv3LcF$Qh63wzmtUqWp9OXnLwe7yv1GcBwHpq59k2a0UrY8xe0"
+
+      # host: What hostnames and IPs are allowed to use this operator account.
+      # Multiple options can be separated by spaces and CIDRs are allowed.
+      # You can use just * or *@* for this section, but it is not recommended
+      # for security reasons.
+      host="*@127.0.0.1 *@192.0.2.40 *@198.51.100.4"
+
+      # type: Which type of operator this person is; see the block
+      # above for the list of types. NOTE: This is case-sensitive as well.
+      type="Helper">
+
+# Once you have edited this file you can remove this line. This is just to
+# ensure that you don't hastily include the file without reading it.
+<die reason="Using opers.conf.example without editing it is a security risk">

@@ -1,0 +1,124 @@
+#-#-#-#-#-#-#-#-#-#-#-  SERVER LINK CONFIGURATION  -#-#-#-#-#-#-#-#-#-#
+#                                                                     #
+# Defines which servers can link to this one, and which servers this  #
+# server may create outbound links to.                                #
+#                                                                     #
+#    ____                _   _____ _     _       ____  _ _   _        #
+#   |  _ \ ___  __ _  __| | |_   _| |__ (_)___  | __ )(_) |_| |       #
+#   | |_) / _ \/ _` |/ _` |   | | | '_ \| / __| |  _ \| | __| |       #
+#   |  _ <  __/ (_| | (_| |   | | | | | | \__ \ | |_) | | |_|_|       #
+#   |_| \_\___|\__,_|\__,_|   |_| |_| |_|_|___/ |____/|_|\__(_)       #
+#                                                                     #
+#  If you want to link servers to InspIRCd you must load the          #
+#  spanningtree module!                                               #
+#                                                                     #
+#                                                                     #
+
+<link
+      # name: The name of the remote server. This must match
+      # the <server:name> value of the remote server.
+      name="hub.example.org"
+
+      # ipaddr: The IP address of the remote server.
+      # Can also be a hostname, but hostname must resolve.
+      ipaddr="penguin.example.org"
+
+      # port: The port to connect to the server on.
+      # It must be bound as a server port on the other server.
+      port="7000"
+
+      # allowmask: Range of IP addresses to allow for this link.
+      # Can be a CIDR (see example).
+      allowmask="203.0.113.0/24 127.0.0.0/8 2001:db8::/32"
+
+      # timeout: If defined, this option defines how long the server
+      # will wait to consider the connect attempt failed and try the
+      # failover (see above).
+      timeout="5m"
+
+      # ssl: If defined, this states the SSL profile that will be used when
+      # making an outbound connection to the server. Options are the name of an
+      # <sslprofile> tag that you have defined or one of "openssl", "gnutls",
+      # "mbedtls" if you have not defined any. See the docs page for the SSL
+      # module you are using for more details.
+      #
+      # You will need to load the ssl_openssl module for OpenSSL, ssl_gnutls
+      # for GnuTLS and ssl_mbedtls for mbedTLS. The server port that you
+      # connect to must be capable of accepting this type of connection.
+      ssl="gnutls"
+
+      # fingerprint: If defined, this option will force servers to be
+      # authenticated using SSL certificate fingerprints. See
+      # https://docs.inspircd.org/3/modules/spanningtree for more information.
+      # This will require an SSL link for both inbound and outbound connections.
+      #fingerprint=""
+
+      # bind: Local IP address to bind to.
+      bind="1.2.3.4"
+
+      # statshidden: Defines if IP is shown to opers when
+      # /STATS c is invoked.
+      statshidden="no"
+
+      # hidden: If this is set to yes, this server and its "child"
+      # servers will not be shown when users do a /MAP or /LINKS.
+      hidden="no"
+
+      # passwords: The passwords we send and receive.
+      # The remote server will have these passwords reversed.
+      # Passwords that contain a space character or begin with
+      # a colon (:) are invalid and may not be used.
+      sendpass="outgoing!password"
+      recvpass="incoming!password">
+
+# A duplicate of the first link block without comments,
+# if you like copying & pasting.
+<link name="hub.example.org"
+      ipaddr="penguin.example.org"
+      port="7000"
+      allowmask="203.0.113.0/24 127.0.0.0/8 2001:db8::/32"
+      timeout="5m"
+      ssl="gnutls"
+      bind="1.2.3.4"
+      statshidden="no"
+      hidden="no"
+      sendpass="outgoing!password"
+      recvpass="incoming!password">
+
+# Link block for services. Options are the same as for the first
+# link block (depending on what your services package supports).
+<link name="services.example.com"
+      ipaddr="localhost"
+      port="7000"
+      allowmask="127.0.0.0/8"
+      sendpass="penguins"
+      recvpass="polarbears">
+
+# Simple autoconnect block. This enables automatic connections to a server.
+# Recommended setup is to have leaves connect to the hub, and have no
+# automatic connections started by the hub.
+<autoconnect period="10m" server="hub.example.org">
+
+# Failover autoconnect block. If you have multiple hubs, or want your network
+# to automatically link even if the hub is down, you can specify multiple
+# space separated servers to autoconnect; they will be tried in a round
+# robin fashion until one succeeds. Period defines the time for restarting
+# a single loop.
+<autoconnect period="2m"
+	server="hub.us.example.org hub.eu.example.org leaf.eu.example.org">
+
+
+#-#-#-#-#-#-#-#-#-#-#-#-# U-LINES CONFIGURATION #-#-#-#-#-#-#-#-#-#-#-#-#
+# This tag defines a U-lined server. A U-lined server has special       #
+# permissions, and should be used with caution. Services servers are    #
+# usually U-lined in this manner.                                       #
+#                                                                       #
+# The 'silent' value, if set to yes, indicates that this server should  #
+# not generate quit and connect notices, which can cut down on noise    #
+# to opers on the network.                                              #
+#                                                                       #
+<uline server="services.example.com" silent="yes">
+
+# Once you have edited this file you can remove this line. This is just to
+# ensure that you don't hastily include the file without reading it.
+<die reason="Using links.conf.example without editing it is a security risk">
