@@ -1,11 +1,20 @@
 FROM alpine:3.9 as builder
 
+LABEL maintainer1="Adam <adam@anope.org>" \
+      maintainer2="Sheogorath <sheogorath@shivering-isles.com>"
+
 ARG VERSION=insp3
+ARG CONFIGUREARGS=
+#ARG EXTRASMODULES=
+ARG BUILD_DEPENDENCIES=
+ARG RUN_DEPENDENCIES=
 
 # Stage 0: Build from source
+COPY modules/ /src/modules/
+
 RUN apk add --no-cache --virtual .build-utils gcc g++ make git pkgconfig perl \
        perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
-       perl-libwww wget gnutls-dev
+       perl-libwww wget gnutls-dev $BUILD_DEPENDENCIES
 
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
@@ -17,7 +26,7 @@ RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
 ## TODO add module support here
 
-RUN ./configure --disable-interactive --uid 10000 --gid 10000
+RUN ./configure $CONFIGUREARGS --disable-interactive --uid 10000 --gid 10000
 RUN make -j install
 
 ## Replace vanilla config files with the ones in this repo
@@ -26,7 +35,7 @@ COPY conf/ /inspircd/run/conf/
 
 # Stage 1: Create optimized runtime container
 FROM alpine:3.9
-RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils && \
+RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils $RUN_DEPENDENCIES && \
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
