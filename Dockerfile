@@ -14,7 +14,7 @@ COPY modules/ /src/modules/
 
 RUN apk add --no-cache --virtual .build-utils gcc g++ make git pkgconfig perl \
        perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
-       perl-libwww wget gnutls-dev $BUILD_DEPENDENCIES
+       perl-libwww wget gnutls-dev gnutls-utils $BUILD_DEPENDENCIES
 
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
@@ -32,6 +32,16 @@ RUN make -j`getconf _NPROCESSORS_ONLN` install
 ## Replace vanilla config files with the ones in this repo
 RUN rm -rf /inspircd/run/conf/
 COPY conf/ /inspircd/run/conf/
+RUN rm /inspircd/run/conf/ssl_template.conf
+
+## Gen SSL cert
+COPY conf/ssl_template.conf /inspircd/ssl_build/
+WORKDIR /inspircd/ssl_build/certs
+RUN certtool --generate-privkey --sec-param normal --outfile key.pem
+RUN certtool --generate-self-signed --load-privkey key.pem --outfile cert.pem --template=../ssl_template.conf
+RUN certtool --generate-request --load-privkey key.pem --outfile csr.pem --template=../ssl_template.conf
+RUN certtool --generate-dh-params --sec-param normal --outfile dhparams.pem
+RUN cp * /inspircd/run/conf/
 
 # Stage 1: Create optimized runtime container
 FROM alpine:3.9
