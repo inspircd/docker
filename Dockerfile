@@ -27,7 +27,7 @@ RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 ## TODO add module support here
 
 RUN ./configure $CONFIGUREARGS --disable-interactive --uid 10000 --gid 10000
-RUN make -j install
+RUN make -j`getconf _NPROCESSORS_ONLN` install
 
 ## Replace vanilla config files with the ones in this repo
 RUN rm -rf /inspircd/run/conf/
