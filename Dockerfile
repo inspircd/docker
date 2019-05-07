@@ -12,7 +12,7 @@ ARG RUN_DEPENDENCIES=
 # Stage 0: Build from source
 COPY modules/ /src/modules/
 
-RUN apk add --no-cache --virtual .build-utils gcc g++ make git pkgconfig perl \
+RUN apk add --no-cache gcc g++ make git pkgconfig perl \
        perl-net-ssleay perl-crypt-ssleay perl-lwp-protocol-https \
        perl-libwww wget gnutls-dev gnutls-utils $BUILD_DEPENDENCIES
 
@@ -45,7 +45,7 @@ RUN cp * /inspircd/run/conf/
 
 # Stage 1: Create optimized runtime container
 FROM alpine:3.9
-RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils $RUN_DEPENDENCIES && \
+RUN apk add --no-cache libgcc libstdc++ gnutls $RUN_DEPENDENCIES && \
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
