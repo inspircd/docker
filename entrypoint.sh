@@ -33,8 +33,8 @@ fi
 # Make sure there is a certificate or generate an new one
 if [ ! -e $INSPIRCD_ROOT/conf/cert.pem ] && [ ! -e $INSPIRCD_ROOT/conf/key.pem ]; then
     cat > /tmp/cert.template <<EOF
-cn              = "${INSP_TLS_CN:-irc.example}"
-email           = "${INSP_TLS_MAIL:-nomail@irc.example}"
+cn              = "${INSP_TLS_CN:-irc.example.com}"
+email           = "${INSP_TLS_MAIL:-nomail@irc.example.com}"
 unit            = "${INSP_TLS_UNIT:-Example Server Admins}"
 organization    = "${INSP_TLS_ORG:-Example IRC Network}"
 locality        = "${INSP_TLS_LOC:-Example City}"
