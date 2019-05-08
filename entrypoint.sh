@@ -4,24 +4,20 @@
 INSPIRCD_ROOT="/inspircd/run"
 
 # TODO fix/make configuration better
-# Make sure that the volume contains a default config but don't override and existing one
-# if [ -d /inspircd/conf/ ]; then
-#     if [ ! -e /inspircd/conf/inspircd.conf ] && [ -w /inspircd/conf/ ]; then
-#         cp -r /conf/* /inspircd/conf/
-#     elif [ ! -w /inspircd/conf/ ]; then
-#         echo "
-#             ##################################
-#             ###                            ###
-#             ###   Can't write to volume!   ###
-#             ###    Please change owner     ###
-#             ###        to uid 10000        ###
-#             ###                            ###
-#             ##################################
-#         "
-#     fi
-# else
-#     ln -s /conf /inspircd/conf
-# fi
+# Make sure that the volume contains a default config but don't override an existing one
+if [ ! -e $INSPIRCD_ROOT/conf/inspircd.conf ] && [ -w $INSPIRCD_ROOT/conf/ ]; then
+    cp -r /inspircd/conf/* $INSPIRCD_ROOT/conf/
+elif [ ! -w $INSPIRCD_ROOT/conf/ ]; then
+    echo "
+        ##################################
+        ###                            ###
+        ###   Can't write to volume!   ###
+        ###    Please change owner     ###
+        ###        to uid 10000        ###
+        ###                            ###
+        ##################################
+    "
+fi
 
 # Link certificates from secrets
 # See https://docs.docker.com/engine/swarm/secrets/
