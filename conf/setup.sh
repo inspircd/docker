@@ -11,11 +11,3 @@ cat <<ADMIN
 <define name="adminEmail" value="${INSP_ADMIN_EMAIL:-admin@irc.example.com}">
 ADMIN
 
-# TODO the hash is not passed to the conf file correctly...I've tried different escapes but nothing works.
-# If I hardcode the hash into the .conf file, I can do /oper defaultoper mypassword and it authenticates fine.
-# I won't spend too much time trying to fix this as a production server really should have a separate (secret) oper.conf
-cat <<OPER
-<define name="operName" value="${INSP_OPER_NAME:-defaultoper}">
-<define name="operPasswordHash" value="${INSP_OPER_PASSWORD_HASH:-TOCFVJa2ABgfWUzFVP6ki244mn9iDMcZ7R1u2BHqc1w$7112bLuSvpFdzS+atgcx1A+hkHMo+6KlVMhekzlUbZo}">
-<define name="operPasswordHashAlgorithm" value="${INSP_OPER_PASSWORD_HASH_ALGORITHM:-hmac-sha512}">
-OPER
