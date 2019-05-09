@@ -26,7 +26,7 @@ RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
 ## TODO add module support here
 
-RUN ./configure $CONFIGUREARGS --disable-interactive --uid 10000 --gid 10000
+RUN ./configure $CONFIGUREARGS --uid 10000 --gid 10000
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
 ## Wipe out vanilla config; entrypoint.sh will handle repopulating it at runtime
