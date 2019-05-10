@@ -5,7 +5,7 @@ LABEL maintainer1="Adam <adam@anope.org>" \
 
 ARG VERSION=insp3
 ARG CONFIGUREARGS=
-#ARG EXTRASMODULES=
+ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
 ARG RUN_DEPENDENCIES=
 
@@ -24,7 +24,9 @@ RUN git clone https://github.com/inspircd/inspircd.git inspircd-src
 WORKDIR /inspircd-src
 RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
-## TODO add module support here
+## Add modules
+RUN { [ $(ls /src/modules/ | wc -l) -gt 0 ] && cp -r /src/modules/* /inspircd-src/src/modules/ || echo "No modules overwritten/added by repository"; }
+RUN echo $EXTRASMODULES | xargs --no-run-if-empty ./modulemanager install
 
 RUN ./configure $CONFIGUREARGS --prefix /inspircd --uid 10000 --gid 10000
 RUN make -j`getconf _NPROCESSORS_ONLN` install
