@@ -20,8 +20,7 @@ script:
   # Initial build with default parameters
   - docker build --build-arg VERSION="${INSP_VERSION}" -t inspircd:testing .
   # Run all tests from test directory
-  - ls tests/*.sh | parallel --joblog /tmp/joblog
-  - cat /tmp/joblog
+  - for file in tests/*.sh; do $file; done
 
 after_success:
   # Push successful builds of the master branch to Docker Hub
