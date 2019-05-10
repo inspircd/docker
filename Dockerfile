@@ -19,18 +19,18 @@ RUN apk add --no-cache gcc g++ make git pkgconfig perl \
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
-RUN git clone https://github.com/inspircd/inspircd.git inspircd
+RUN git clone https://github.com/inspircd/inspircd.git inspircd-src
 
-WORKDIR /inspircd
+WORKDIR /inspircd-src
 RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
 ## TODO add module support here
 
-RUN ./configure $CONFIGUREARGS --uid 10000 --gid 10000
+RUN ./configure $CONFIGUREARGS --prefix /inspircd --uid 10000 --gid 10000
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
 ## Wipe out vanilla config; entrypoint.sh will handle repopulating it at runtime
-RUN rm -rf /inspircd/run/conf/*
+RUN rm -rf /inspircd/conf/*
 
 # Stage 1: Create optimized runtime container
 FROM alpine:3.9
@@ -38,13 +38,13 @@ RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils $RUN_DEPENDENCIES &&
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
-COPY --chown=inspircd:inspircd conf/ /inspircd/conf/
-COPY --chown=inspircd:inspircd entrypoint.sh /inspircd/entrypoint.sh
-COPY --from=builder --chown=inspircd:inspircd /inspircd/run/ /inspircd/run/
+COPY --chown=inspircd:inspircd conf/ /conf/
+COPY --chown=inspircd:inspircd entrypoint.sh /entrypoint.sh
+COPY --from=builder --chown=inspircd:inspircd /inspircd/ /inspircd/
 
 USER inspircd
 
 EXPOSE 6667 6697 7000 7001
 
-WORKDIR /inspircd/
-ENTRYPOINT ["/inspircd/entrypoint.sh"]
+WORKDIR /
+ENTRYPOINT ["/entrypoint.sh"]
