@@ -45,5 +45,8 @@ cat <<EOF
       ${INSP_SERVICES_OPTIONS}>
 
 <uline server="$INSP_SERVICES_NAME" silent="yes">
+
+<module name="m_sasl.so">
+<sasl target="$INSP_SERVICES_NAME">
 EOF
 fi
