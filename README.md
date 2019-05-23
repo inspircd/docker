@@ -91,7 +91,7 @@ $ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_HASH=hmac-sha256" -e 
 
 ## Oper
 
-We provide two possibly ways to define a default oper for the server. 
+We provide two possibly ways to define a default oper for the server.
 
 If neither `INSP_OPER_PASSWORD_HASH`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will be provided to keep your server secure.
 
@@ -302,6 +302,8 @@ We automatically build our images weekly to include the current state of modern 
 
 Considering to update your docker setup regularly.
 
+**Hint:** *Check the "Breaking changes"-section when you notice problems.*
+
 ## Deprecated features
 
 We provide information about features we remove in future.
@@ -311,6 +313,8 @@ We provide information about features we remove in future.
 ## Breaking changes
 
 We document changes that possibly broken your setup and are no longer supported. Hopefully, we can provide useful information for debugging.
+
+* [`046bb02`](https://github.com/inspircd/inspircd-docker/commit/046bb028a700755ee9669b20c02057a947e2fe34) Update to InspIRCd 3.0 requires some config changes. If you run InspIRCd using docker-compose or by mounting a volume, make sure you update your config according to the [docs page](https://docs.inspircd.org/3/configuration-changes/).
 
 * [`cdba94f`](https://github.com/inspircd/inspircd-docker/commit/cdba94f6ae0c71ad37b3a88114a14ecb0c5177c1) `ADDPACKAGES` and `DELPACKAGES` are replaced by `BUILD_DEPENDENCIES` and `RUN_DEPENDENCIES`
 
