@@ -162,7 +162,7 @@ We only list the possible options once, but they work for `INSP_LINK1_*`, as wel
 
 This image allows you to configure services link blocks by environment variables.
 
-This way you can easily connect [Anope](https://www.anope.org/) or [Atheme](http://atheme.net/) to your InspIRCd container.
+This way you can easily connect [Anope](https://www.anope.org/) or [Atheme](https://atheme.github.io/atheme.html) to your InspIRCd container.
 
 |Available variables      |Default value                   |Description                                   |
 |-------------------------|--------------------------------|----------------------------------------------|
