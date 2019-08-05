@@ -1,15 +1,5 @@
 #!/bin/sh
 
-########################################
-###                                  ###
-### DON'T EDIT THIS FILE AFTER BUILD ###
-###                                  ###
-###    USE ENVIRONMENT VARIABLES     ###
-###              INSTEAD             ###
-###                                  ###
-########################################
-
-
 # When not specified, try to be smart and predict a allowmask
 if [ "$INSP_SERVICES_ALLOWMASK" = "" ]; then
     INSP_SERVICES_ALLOWMASK=$(ip  route show dev eth0 | grep -v default | cut -d" " -f1 | head -1)

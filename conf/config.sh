@@ -1,17 +1,6 @@
 #!/bin/sh
 # shellcheck disable=SC2039
 
-########################################
-###                                  ###
-### DON'T EDIT THIS FILE AFTER BUILD ###
-###                                  ###
-###    USE ENVIRONMENT VARIABLES     ###
-###              INSTEAD             ###
-###                                  ###
-########################################
-
-
-
 # Default variables
 cat <<EOF
 # Network section

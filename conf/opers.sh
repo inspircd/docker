@@ -1,14 +1,4 @@
 #!/bin/sh
-########################################
-###                                  ###
-### DON'T EDIT THIS FILE AFTER BUILD ###
-###                                  ###
-###    USE ENVIRONMENT VARIABLES     ###
-###              INSTEAD             ###
-###                                  ###
-########################################
-
-
 
 # Prevent breaking changes
 if [ "$INSP_OPER_PASSWORD_HASH" = "" ] && [ "$INSP_OPER_PASSWORD" != "" ]; then
