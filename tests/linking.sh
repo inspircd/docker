@@ -16,12 +16,12 @@ set -e
 DOCKERNETWORK=$(docker network create linkingTestNet)
 
 # Run first instance of InspIRCd to connect to.
-DOCKERCONTAINER1=$(docker run -d --name test1 --network linkingTestNet -e INSP_SERVER_NAME="test1.example.com" -e INSP_LINK1_NAME="test2.example.com" -e INSP_LINK1_PASSWORD="test" -e INSP_LINK1_IPADDR="test2" inspircd:testing)
+DOCKERCONTAINER1=$(docker run -d --name test1 --network linkingTestNet -e INSP_SERVER_NAME="test1.example.com" -e INSP_LINK1_NAME="test2.example.com" -e INSP_LINK1_PASSWORD="test" -e INSP_LINK1_IPADDR="test2" inspircd:testing --debug)
 
 sleep 5
 
 # Run seconds InspIRCd instance
-DOCKERCONTAINER2=$(docker run -d --name test2 --network linkingTestNet -e INSP_SERVER_NAME="test2.example.com" -e INSP_LINK1_NAME="test1.example.com" -e INSP_LINK1_PASSWORD="test" -e INSP_LINK1_IPADDR="test1" inspircd:testing)
+DOCKERCONTAINER2=$(docker run -d --name test2 --network linkingTestNet -e INSP_SERVER_NAME="test2.example.com" -e INSP_LINK1_NAME="test1.example.com" -e INSP_LINK1_PASSWORD="test" -e INSP_LINK1_IPADDR="test1" inspircd:testing --debug)
 
 sleep 10
 
