@@ -50,3 +50,11 @@ EXPOSE 6667 6697 7000 7001
 
 WORKDIR /
 ENTRYPOINT ["/entrypoint.sh"]
+
+HEALTHCHECK \
+        --interval=1s \
+        --timeout=3s \
+        --start-period=60s \
+        --retries=3 \
+    CMD \
+        /usr/bin/nc -z localhost 6667
