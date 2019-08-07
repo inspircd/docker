@@ -49,8 +49,12 @@ time_stamping_key
 EOF
     /usr/bin/certtool --generate-privkey --bits 4096 --sec-param normal --outfile $INSPIRCD_ROOT/conf/key.pem
     /usr/bin/certtool --generate-self-signed --load-privkey $INSPIRCD_ROOT/conf/key.pem --outfile $INSPIRCD_ROOT/conf/cert.pem --template /tmp/cert.template
-    /usr/bin/certtool --generate-dh-params --sec-param normal --outfile $INSPIRCD_ROOT/conf/dhparams.pem
     rm /tmp/cert.template
+fi
+
+# Make sure dhparams are present
+if [ ! -e $INSPIRCD_ROOT/conf/dhparams.pem ]; then
+    /usr/bin/certtool --generate-dh-params --sec-param normal --outfile $INSPIRCD_ROOT/conf/dhparams.pem
 fi
 
 cd $INSPIRCD_ROOT
