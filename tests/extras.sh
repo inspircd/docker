@@ -15,7 +15,7 @@ set -e
 TESTMODULE="m_svsoper"
 
 # Create directory for testing
-mkdir /tmp/test-extras/
+mkdir -p /tmp/test-extras/
 
 docker build --build-arg EXTRASMODULES="$TESTMODULE" .
 
