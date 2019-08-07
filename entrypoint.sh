@@ -53,4 +53,5 @@ EOF
     rm /tmp/cert.template
 fi
 
-exec $INSPIRCD_ROOT/bin/inspircd --nofork $@
+cd $INSPIRCD_ROOT
+exec env INSPIRCD_ROOT=$INSPIRCD_ROOT $INSPIRCD_ROOT/bin/inspircd --nofork $@

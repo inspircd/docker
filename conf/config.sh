@@ -32,8 +32,8 @@ cat <<EOF
 EOF
 
 # Include custom configurations if conf.d exists
-if [ -d conf.d ]; then
-    find conf.d/*.conf | while read -r file; do echo "<include file=\"$file\">"; done
+if [ -d "${INSPIRCD_ROOT}"/conf.d ]; then
+    find "${INSPIRCD_ROOT}"/conf.d/*.conf | while read -r file; do echo "<include file=\"$file\">"; done
 fi
 
 # Include custom configurations from docker secrets. (For example for further oper configs)
