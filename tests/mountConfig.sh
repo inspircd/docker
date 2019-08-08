@@ -14,7 +14,7 @@ set -e
 . "$(dirname "$0")/.portconfig.sh"
 
 # Create config directory for testing
-mkdir /tmp/test-mountConfig/ && sudo chown 10000 /tmp/test-mountConfig/
+mkdir -p /tmp/test-mountConfig/ && sudo chown 10000 /tmp/test-mountConfig/
 
 # Create docker container with our test parameters
 DOCKERCONTAINER=$(docker run -d -v /tmp/test-mountConfig/:/inspircd/conf -p "127.0.0.1:${CLIENT_PORT}:6667" -p "127.0.0.1:${TLS_CLIENT_PORT}:6697" inspircd:testing)

@@ -52,7 +52,7 @@ SECRETKEY=$(docker secret create test-secrets-key  /tmp/test-secrets-key.pem)
 DOCKERSERVICE=$(docker service create -q -d -p "${CLIENT_PORT}:6667" -p "${TLS_CLIENT_PORT}:6697" --secret source=test-secrets-key,target=inspircd.key --secret source=test-secrets-cert,target=inspircd.crt inspircd:testing)
 sleep 35
 # Make sure TLS is working
-TLSCHECK=$(echo quit | timeout 10 openssl s_client -ign_eof -connect "localhost:${TLS_CLIENT_PORT}" 2>/dev/null | grep -c "OU=Secret Server Admins")
+TLSCHECK=$(echo quit | timeout 10 openssl s_client -ign_eof -connect "localhost:${TLS_CLIENT_PORT}" 2>/dev/null | grep -c "OU\s*=\s*Secret Server Admins")
 [ "$TLSCHECK" -gt 0 ] || exit 1
 
 sleep 5
