@@ -5,7 +5,7 @@ services:
 
 env:
   global:
-    - INSP_VERSION=v3.2.0
+    - INSP_VERSION=v3.3.0
 
 before_install:
   - sudo apt-get -qq update
