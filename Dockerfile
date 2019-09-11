@@ -7,7 +7,6 @@ ARG VERSION=insp3
 ARG CONFIGUREARGS=
 ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
-ARG RUN_DEPENDENCIES=
 
 # Stage 0: Build from source
 COPY modules/ /src/modules/
@@ -28,7 +27,8 @@ RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 RUN { [ $(ls /src/modules/ | wc -l) -gt 0 ] && cp -r /src/modules/* /inspircd-src/src/modules/ || echo "No modules overwritten/added by repository"; }
 RUN echo $EXTRASMODULES | xargs --no-run-if-empty ./modulemanager install
 
-RUN ./configure $CONFIGUREARGS --prefix /inspircd --uid 10000 --gid 10000
+RUN ./configure $CONFIGUREARGS
+RUN ./configure --prefix /inspircd --uid 10000 --gid 10000
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
 ## Wipe out vanilla config; entrypoint.sh will handle repopulating it at runtime
@@ -36,6 +36,9 @@ RUN rm -rf /inspircd/conf/*
 
 # Stage 1: Create optimized runtime container
 FROM alpine:3.9
+
+ARG RUN_DEPENDENCIES=
+
 RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils $RUN_DEPENDENCIES && \
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
