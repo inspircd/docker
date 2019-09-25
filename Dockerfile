@@ -27,8 +27,8 @@ RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 RUN { [ $(ls /src/modules/ | wc -l) -gt 0 ] && cp -r /src/modules/* /inspircd-src/src/modules/ || echo "No modules overwritten/added by repository"; }
 RUN echo $EXTRASMODULES | xargs --no-run-if-empty ./modulemanager install
 
-RUN ./configure $CONFIGUREARGS --uid 10000 --gid 10000
 RUN ./configure --prefix /inspircd --uid 10000 --gid 10000
+RUN echo $CONFIGUREARGS | xargs --no-run-if-empty ./configure
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 
 ## Wipe out vanilla config; entrypoint.sh will handle repopulating it at runtime
