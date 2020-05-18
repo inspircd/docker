@@ -30,6 +30,8 @@ $ docker run --name ircd -p 6667:6667 inspircd/inspircd-docker
 
 This will start an InspIRCd instance listening on the default IRC port 6667 on the container.
 
+You should then be able to connect using your favourite client.
+
 To include your configuration into the container use:
 
 ```console
@@ -71,6 +73,18 @@ A quick example how to use the environment variables:
 ```console
 $ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspircd/inspircd-docker
 ```
+
+### Initial setup issues
+
+If you have issues with registration timeouts when connecting to a fresh installation, you may have DNS issues. By default, when a user connects to the IRC server, the user's IP is checked against DNS blacklists. In some cases this check can fail.
+
+To see if you're affected by this particular issue, try disabling DNS Blacklists, e.g.
+
+```console
+$ docker run --name inspircd -p 6667:6667 -e "INSP_ENABLE_DNSBL=no" inspircd/inspircd-docker
+```
+
+If you can connect with `INSP_ENABLE_DNSBL=no`, try adding a DNS configuration to your `inspircd.conf` file to point to a DNS server you trust. See [the DNS docs](https://docs.inspircd.org/3/configuration/#ltdnsgt) for details.
 
 ### Password authentication
 
