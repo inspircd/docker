@@ -1,6 +1,5 @@
 #!/bin/sh
-# shellchecK disable=SC3028
-# shellcheck disable=SC2039
+# shellchecK disable=SC3028,SC2039
 
 ########################################
 ###                                  ###
