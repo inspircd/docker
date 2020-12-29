@@ -19,7 +19,7 @@ DOCKERCONTAINER_IRCD="$(docker run --network services --network-alias inspircd -
 
 sleep 10
 
-DOCKERCONTAINER_SERVICES="$(docker run --network services -e "ANOPE_UPLINK_IP=inspircd" -e "ANOPE_UPLINK_PASSWORD=password" -e "ANOPE_SERVICES_NAME=services.example.com" -d anope/anope:2.0.5)"
+DOCKERCONTAINER_SERVICES="$(docker run --network services -e "ANOPE_UPLINK_IP=inspircd" -e "ANOPE_UPLINK_PASSWORD=password" -e "ANOPE_SERVICES_NAME=services.example.com" -d anope/anope:latest)"
 
 sleep 10
 
