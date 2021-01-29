@@ -43,9 +43,9 @@ RUN apk add --no-cache libgcc libstdc++ gnutls gnutls-utils $RUN_DEPENDENCIES &&
     addgroup -g 10000 -S inspircd && \
     adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
-COPY --chown=inspircd:inspircd conf/ /conf/
 COPY --chown=inspircd:inspircd entrypoint.sh /entrypoint.sh
 COPY --from=builder --chown=inspircd:inspircd /inspircd/ /inspircd/
+COPY --chown=inspircd:inspircd conf/ /inspircd/conf/
 
 USER inspircd
 

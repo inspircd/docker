@@ -3,22 +3,6 @@
 
 INSPIRCD_ROOT="/inspircd"
 
-# TODO fix/make configuration better
-# Make sure that the volume contains a default config but don't override an existing one
-if [ ! -e $INSPIRCD_ROOT/conf/inspircd.conf ] && [ -w $INSPIRCD_ROOT/conf/ ]; then
-    cp -r /conf/* $INSPIRCD_ROOT/conf/
-elif [ ! -w $INSPIRCD_ROOT/conf/ ]; then
-    echo "
-        ##################################
-        ###                            ###
-        ###   Can't write to volume!   ###
-        ###    Please change owner     ###
-        ###        to uid 10000        ###
-        ###                            ###
-        ##################################
-    "
-fi
-
 # Link certificates from secrets
 # See https://docs.docker.com/engine/swarm/secrets/
 if [ -e /run/secrets/inspircd.key ] && [ -e /run/secrets/inspircd.crt ]; then

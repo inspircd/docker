@@ -1,17 +1,6 @@
 #!/bin/sh
 # shellchecK disable=SC3028,SC2039
 
-########################################
-###                                  ###
-### DON'T EDIT THIS FILE AFTER BUILD ###
-###                                  ###
-###    USE ENVIRONMENT VARIABLES     ###
-###              INSTEAD             ###
-###                                  ###
-########################################
-
-
-
 # Default variables
 INSP_SERVER_HOSTNAME=$(hostname)
 cat <<EOF
