@@ -55,7 +55,7 @@ WORKDIR /
 ENTRYPOINT ["/entrypoint.sh"]
 
 HEALTHCHECK \
-        --interval=1s \
+        --interval=60s \
         --timeout=3s \
         --start-period=60s \
         --retries=3 \
