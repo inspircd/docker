@@ -11,8 +11,8 @@ jobs:
     env:
       DOCKER_REPO_PREFIX: inspircd
       DOCKER_REPO_NAME: inspircd-docker
-      DOCKER_USERNAME: ${{ secrets.docker-username }}
-      DOCKER_PASSWORD: ${{ secrets.docker-password }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       INSP_VERSION: v3.8.1
     steps:
       - uses: actions/checkout@v2
@@ -31,7 +31,7 @@ jobs:
       - name: Push container
         if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         run: |
-          if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ "$TRAVIS_BRANCH" == "master" ] && [ "$DOCKER_REPO_PREFIX" != "" ] && [ "$DOCKER_REPO_NAME" != "" ] && [ "$DOCKER_USERNAME" != "" ] && [ "$DOCKER_PASSWORD" != "" ]; then
+          if [ "$DOCKER_REPO_NAME" != "" ] && [ "$DOCKER_USERNAME" != "" ] && [ "$DOCKER_PASSWORD" != "" ]; then
             ./tools/tagging.sh "${DOCKER_REPO_PREFIX}/${DOCKER_REPO_NAME}" "${INSP_VERSION:-latest}" ""
             docker images "${DOCKER_REPO_PREFIX}/${DOCKER_REPO_NAME}"
             echo "$DOCKER_PASSWORD" | docker login --username "$DOCKER_USERNAME" --password-stdin
