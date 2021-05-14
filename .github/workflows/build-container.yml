@@ -13,7 +13,7 @@ jobs:
       DOCKER_REPO_NAME: inspircd-docker
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-      INSP_VERSION: v3.9.0
+      INSP_VERSION: v3.10.0
     steps:
       - uses: actions/checkout@v2
 
