@@ -1,5 +1,5 @@
 #!/bin/sh
-# shellcheck disable=SC2039
+# shellchecK disable=SC3028,SC2039
 
 ########################################
 ###                                  ###
@@ -13,9 +13,10 @@
 
 
 # Default variables
+INSP_SERVER_HOSTNAME=$(hostname)
 cat <<EOF
 # Network section
-<define name="hostname" value="${HOSTNAME:-irc}">
+<define name="hostname" value="${INSP_SERVER_HOSTNAME:-irc}">
 <define name="netsuffix" value="${INSP_NET_SUFFIX:-.example.com}">
 <define name="netname" value="${INSP_NET_NAME:-Omega}">
 <define name="servername" value="${INSP_SERVER_NAME:-&hostname;&netsuffix;}">

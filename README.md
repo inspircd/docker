@@ -284,13 +284,13 @@ Available build arguments:
 |Argument            |Description                                                              |
 |--------------------|-------------------------------------------------------------------------|
 |`VERSION`           |Version of InspIRCd. Uses `-b`-parameter from `git clone`                |
-|`CONFIGUREARGS`     |Additional Parameters. Used to enable core extras like `m_geoip.cpp`     |
-|`EXTRASMODULES`     |Additional Modules from [inspircd-extras](https://github.com/inspircd/inspircd-extras/tree/master/2.0) repository like `m_geoipban`|
+|`CONFIGUREARGS`     |Additional parameters. Used to enable core extras like `m_geo_maxmind`   |
+|`EXTRASMODULES`     |Additional modules from [inspircd-contrib](https://github.com/inspircd/inspircd-contrib) repository like `m_geocmd`|
 |`BUILD_DEPENDENCIES`|Additional packages which are only needed during compilation             |
 |`RUN_DEPENDENCIES`  |Additional packages which are needed to run InspIRCd                     |
 
 ```console
-docker build --build-arg "BUILD_DEPENDENCIES=geoip-dev pcre-dev" --build-arg "RUN_DEPENDENCIES=geoip pcre" --build-arg "CONFIGUREARGS=--enable-extras=m_geoip.cpp --enable-extras=m_regex_pcre.cpp"  --build-arg "EXTRASMODULES=m_geoipban" inspircd-docker
+docker build --build-arg "BUILD_DEPENDENCIES=libmaxminddb-dev pcre-dev" --build-arg "RUN_DEPENDENCIES=libmaxminddb pcre" --build-arg "CONFIGUREARGS=--enable-extras m_geo_maxmind --enable-extras m_regex_pcre"  --build-arg "EXTRASMODULES=m_geocmd" inspircd-docker
 ```
 
 ## Building additional modules
