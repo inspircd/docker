@@ -19,7 +19,7 @@ jobs:
         name: Pipeline variables
         id: pipeline_vars
         run: |
-          if [ $REPO == 'inspircd/inspircd-docker' && $REF == 'refs/heads/master' ]
+          if [ "${REPO}-${REF}"=="inspircd/inspircd-docker-refs/heads/master" ]
           then
             echo "::set-output name=push::true"
             echo "::set-output name=platforms::linux/amd64,linux/arm64"
