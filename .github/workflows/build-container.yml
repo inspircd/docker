@@ -67,5 +67,5 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
           repository: ${{ env.DOCKER_REPO_PREFIX }}/${{ env.DOCKER_REPO_NAME }}
-          short-description: Official image for InspIRCd Internet Relay Chat Daemon http://inspircd.org
+          short-description: Official image for InspIRCd Internet Relay Chat server. https://www.inspircd.org
           readme-filepath: README.md
