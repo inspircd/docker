@@ -21,11 +21,11 @@ jobs:
         run: |
           if [ "${REPO}-${REF}"=="inspircd/inspircd-docker-refs/heads/master" ]
           then
-            echo "::set-output name=push::true"
-            echo "::set-output name=platforms::linux/amd64,linux/arm64"
+            echo "::set-output name=push::TRUE"
+            echo "::set-output name=platforms::'linux/amd64,linux/arm64'"
           else
-            echo "::set-output name=push::false"
-            echo "::set-output name=platforms::linux/amd64"
+            echo "::set-output name=push::FALSE"
+            echo "::set-output name=platforms::'linux/amd64'"
           fi
         env:
           REPO: ${{ github.repository }}
@@ -67,7 +67,6 @@ jobs:
           platforms: ${{ steps.pipeline_vars.platforms }}
           push: ${{ steps.pipeline_vars.push }}
           tags: ${{ steps.meta.outputs.tags }}
-          labels: 
       - 
         name: Docker Hub Description
         if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
