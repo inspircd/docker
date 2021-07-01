@@ -16,6 +16,21 @@ jobs:
       - 
         uses: actions/checkout@v2
       - 
+        name: Pipeline variables
+        id: pipeline_vars
+        run: |
+          if [ $REPO == 'inspircd/inspircd-docker' && $REF == 'refs/heads/master' ]
+          then
+            echo "::set-output name=push::true"
+            echo "::set-output name=platforms::linux/amd64,linux/arm64"
+          else
+            echo "::set-output name=push::false"
+            echo "::set-output name=platforms::linux/amd64"
+          fi
+        env:
+          REPO: ${{ github.repository }}
+          REF: ${{ github.ref }}
+      - 
         name: Prepare environment
         run: |
           sudo apt-get -qq update
@@ -23,7 +38,6 @@ jobs:
           sudo apt-get install -y openssl parallel
       -
         name: Docker meta
-        if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         id: meta
         uses: docker/metadata-action@v3
         with:
@@ -34,28 +48,24 @@ jobs:
             type=semver,pattern={{major}},value=${{ env.INSP_VERSION }}
       - 
         name: Set up QEMU
-        if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         uses: docker/setup-qemu-action@v1
       -
         name: Set up Docker Buildx
-        if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         uses: docker/setup-buildx-action@v1
       -
         name: Login to DockerHub
-        if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         uses: docker/login-action@v1 
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       -
         name: Build and push
-        if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         uses: docker/build-push-action@v2
         with:
           context: .
           build-args: VERSION=${{ env.INSP_VERSION }}
-          platforms: linux/amd64,linux/arm64
-          push: true
+          platforms: ${{ steps.pipeline_vars.platforms }}
+          push: ${{ steps.pipeline_vars.push }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: 
       - 
