@@ -19,8 +19,13 @@ jobs:
         name: Pipeline variables
         id: pipeline_vars
         run: |
-          if [ "${REPO}-${REF}"=="inspircd/inspircd-docker-refs/heads/master" ]
-          then
+          EXPECTED="inspircd/inspircd docker-refs/heads/master";
+          ACTUAL="$REPO $REF";
+
+          echo "Expected: $EXPECTED"
+          echo "Actual:   $ACTUAL"
+
+          if [ "$EXPECTED" == "$ACTUAL" ]; then
             echo "::set-output name=push::true"
             echo "::set-output name=platforms::linux/amd64,linux/arm64"
           else
