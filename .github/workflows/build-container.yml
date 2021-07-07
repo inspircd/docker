@@ -83,11 +83,11 @@ jobs:
           echo "DEBUG: Assuming we have an image locally, it's going to be tagged $WHOLE_IMAGE_NAME"
           
           if [ -z $(docker image list -q "${WHOLE_IMAGE_NAME}") ]; then
-            echo "DEBUG: We couldn't find the $WHOLE_IMAGE_NAME" image in our build environment."
+            echo "DEBUG: We couldn't find the ${WHOLE_IMAGE_NAME} image in our build environment."
           else 
-            docker image tag $WHOLE_IMAGE_NAME inspircd-docker:testing
+            docker image tag $WHOLE_IMAGE_NAME inspircd:testing
           
-            echo "DEBUG: we now should have a local image tagged inspircd-docker:testing"
+            echo "DEBUG: we now should have a local image tagged inspircd:testing"
             docker image list
 
             echo "If the output shows the right image, we should be able to run the test script"
