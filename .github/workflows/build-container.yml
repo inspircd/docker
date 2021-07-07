@@ -74,6 +74,22 @@ jobs:
           push: ${{ steps.pipeline_vars.outputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
       - 
+        name: Prep tests
+        run: |
+          echo 'DEBUG: Want to check to see if the previous BuildX step has left the images in our environment'
+          docker image list
+
+          WHOLE_IMAGE_NAME="inspircd-docker:$(echo $VERSION | sed s/v//)"
+          echo "DEBUG: Assuming we have an image locally, it's going to be tagged $WHOLE_IMAGE_NAME"
+          docker image tag $WHOLE_IMAGE_NAME inspircd-docker:testing
+          
+          echo "DEBUG: we now should have a local image tagged inspircd-docker:testing"
+          docker image list
+
+          echo "If the output shows the right image, we should be able to run the test script"
+        env:
+          VERSION: ${{ env.INSP_VERSION }}
+      - 
         name: Docker Hub Description
         if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         uses: peter-evans/dockerhub-description@v2
