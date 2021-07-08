@@ -41,6 +41,23 @@ jobs:
           sudo apt-get -qq update
           sudo apt-get -y -o Dpkg::Options::="--force-confnew" install moby-engine moby-cli
           sudo apt-get install -y openssl parallel
+      - 
+        name: Build and test amd64 image
+        run: |
+          IP=$(ip addr s \
+            | grep global \
+            | grep -oE '((1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])\.){3}(1?[0-9][0-9]?|2[0-4][0-9]|25[0-5])' \
+            | head -n1)
+
+          echo "docker swarm init on $IP"
+          docker swarm init --advertise-addr $IP
+          docker build --build-arg VERSION="${INSP_VERSION}" -t inspircd:testing .
+
+          echo "* * * Image built, running tests... * * *"
+          ./run_tests.sh
+          echo "* * * Tests OK! * * *" 
+        env:
+          INSP_VERSION: ${{ env.INSP_VERSION }}
       -
         name: Docker meta
         id: meta
@@ -73,27 +90,6 @@ jobs:
           platforms: ${{ steps.pipeline_vars.outputs.platforms }}
           push: ${{ steps.pipeline_vars.outputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
-      - 
-        name: Prep tests
-        run: |
-          echo 'DEBUG: Want to check to see if the previous BuildX step has left the images in our environment'
-          docker image list
-
-          WHOLE_IMAGE_NAME="inspircd-docker:$(echo $VERSION | sed s/v//)"
-          echo "DEBUG: Assuming we have an image locally, it's going to be tagged $WHOLE_IMAGE_NAME"
-          
-          if [ -z $(docker image list -q "${WHOLE_IMAGE_NAME}") ]; then
-            echo "DEBUG: We couldn't find the ${WHOLE_IMAGE_NAME} image in our build environment."
-          else 
-            docker image tag $WHOLE_IMAGE_NAME inspircd:testing
-          
-            echo "DEBUG: we now should have a local image tagged inspircd:testing"
-            docker image list
-
-            echo "If the output shows the right image, we should be able to run the test script"
-          fi
-        env:
-          VERSION: ${{ env.INSP_VERSION }}
       - 
         name: Docker Hub Description
         if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
