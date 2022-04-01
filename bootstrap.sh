@@ -11,7 +11,7 @@ command_exists wget
 docker_installed
 
 # Workaround for CentOS and maybe more OSes where docker.service is not started automatically
-# See https://github.com/Adam-/inspircd-docker/issues/35
+# See https://github.com/inspircd/inspircd-docker/issues/35
 if command -v systemctl >/dev/null 2>&1; then
     # Make sure docker unit exists
     if [ "$(systemctl cat docker | wc -l)" -ne 0 ]; then

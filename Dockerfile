@@ -1,7 +1,6 @@
 FROM alpine:3.14 as builder
 
-LABEL maintainer1="Adam <adam@anope.org>" \
-      maintainer2="Sheogorath <sheogorath@shivering-isles.com>"
+LABEL maintainer="InspIRCd Team <noreply@inspircd.org>"
 
 ARG VERSION=insp3
 ARG CONFIGUREARGS=
