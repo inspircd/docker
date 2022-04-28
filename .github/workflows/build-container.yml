@@ -11,7 +11,7 @@ jobs:
     env:
       DOCKER_REPO_PREFIX: inspircd
       DOCKER_REPO_NAME: inspircd-docker
-      INSP_VERSION: v3.12.0
+      INSP_VERSION: v3.13.0
     steps:
       - 
         uses: actions/checkout@v3
