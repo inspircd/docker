@@ -11,11 +11,11 @@ jobs:
     env:
       DOCKER_REPO_PREFIX: inspircd
       DOCKER_REPO_NAME: inspircd-docker
-      INSP_VERSION: v3.13.0
+      INSP_VERSION: v3.14.0
     steps:
-      - 
+      -
         uses: actions/checkout@v3
-      - 
+      -
         name: Pipeline variables
         id: pipeline_vars
         run: |
@@ -37,13 +37,13 @@ jobs:
         env:
           REPO: ${{ github.repository }}
           REF: ${{ github.ref }}
-      - 
+      -
         name: Prepare environment
         run: |
           sudo apt-get -qq update
           sudo apt-get -y -o Dpkg::Options::="--force-confnew" install moby-engine moby-cli
           sudo apt-get install -y openssl parallel
-      - 
+      -
         name: Build and test amd64 image
         run: |
           IP=$(ip addr s \
@@ -57,7 +57,7 @@ jobs:
 
           echo "* * * Image built, running tests... * * *"
           ./run_tests.sh
-          echo "* * * Tests OK! * * *" 
+          echo "* * * Tests OK! * * *"
         env:
           INSP_VERSION: ${{ env.INSP_VERSION }}
       -
@@ -70,7 +70,7 @@ jobs:
             type=semver,pattern={{version}},value=${{ env.INSP_VERSION }}
             type=semver,pattern={{major}}.{{minor}},value=${{ env.INSP_VERSION }}
             type=semver,pattern={{major}},value=${{ env.INSP_VERSION }}
-      - 
+      -
         name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       -
@@ -79,7 +79,7 @@ jobs:
       -
         name: Login to DockerHub
         if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
-        uses: docker/login-action@v2 
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
@@ -92,7 +92,7 @@ jobs:
           platforms: ${{ steps.pipeline_vars.outputs.platforms }}
           push: ${{ steps.pipeline_vars.outputs.push }}
           tags: ${{ steps.meta.outputs.tags }}
-      - 
+      -
         name: Docker Hub Description
         if: github.repository == 'inspircd/inspircd-docker' && github.ref == 'refs/heads/master'
         uses: peter-evans/dockerhub-description@v3
