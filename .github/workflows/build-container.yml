@@ -27,12 +27,12 @@ jobs:
 
           if [ "$EXPECTED" == "$ACTUAL" ]; then
             echo "On inspircd/inspircd-docker repo, master branch - building all architectures and pushing to Docker Hub"
-            echo "::set-output name=push::true"
-            echo "::set-output name=platforms::linux/amd64,linux/arm64"
+            echo "push=true" >> $GITHUB_OUTPUT
+            echo "platforms=linux/amd64,linux/arm64" >> $GITHUB_OUTPUT
           else
             echo "Not on main repo and master branch - only building amd64 architecture and not pushing to Docker Hub"
-            echo "::set-output name=push::false"
-            echo "::set-output name=platforms::linux/amd64"
+            echo "push=false" >> $GITHUB_OUTPUT
+            echo "platforms=linux/amd64" >> $GITHUB_OUTPUT
           fi
         env:
           REPO: ${{ github.repository }}
