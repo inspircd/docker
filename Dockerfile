@@ -20,6 +20,7 @@ RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 RUN git clone https://github.com/inspircd/inspircd.git inspircd-src
 
 WORKDIR /inspircd-src
+RUN git fetch --all --tags
 RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
 ## Add modules
