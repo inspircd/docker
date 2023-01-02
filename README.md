@@ -290,7 +290,7 @@ Available build arguments:
 |`RUN_DEPENDENCIES`  |Additional packages which are needed to run InspIRCd                     |
 
 ```console
-docker build --build-arg "BUILD_DEPENDENCIES=libmaxminddb-dev pcre-dev" --build-arg "RUN_DEPENDENCIES=libmaxminddb pcre" --build-arg "CONFIGUREARGS=--enable-extras m_geo_maxmind --enable-extras m_regex_pcre"  --build-arg "EXTRASMODULES=m_geocmd" inspircd-docker
+docker build --build-arg "BUILD_DEPENDENCIES=libmaxminddb-dev pcre-dev" --build-arg "RUN_DEPENDENCIES=libmaxminddb pcre" --build-arg "CONFIGUREARGS=--enable-extras m_geo_maxmind --enable-extras m_regex_pcre"  --build-arg "EXTRASMODULES=m_geocmd" --build-arg "VERSION=v1.2.3" inspircd-docker
 ```
 
 ## Building additional modules

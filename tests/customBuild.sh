@@ -22,10 +22,10 @@ wget -O "$TESTDIR/modules/m_timedstaticquit.cpp"  "https://raw.githubusercontent
 
 [ ! -e "$TESTDIR/modules/m_timedstaticquit.cpp" ] && sleep 10
 
-docker build /tmp/test-customBuild/
+docker build --build-arg VERSION="${INSP_VERSION}" /tmp/test-customBuild/
 
 # Build a second time to have a hash (everything is cached so it's no real build)
-DOCKERIMAGE=$(docker build -q "$TESTDIR")
+DOCKERIMAGE=$(docker build -q --build-arg VERSION="${INSP_VERSION}" "$TESTDIR")
 
 # Run container in a simple way
 DOCKERCONTAINER=$(docker run -d -p "127.0.0.1:${CLIENT_PORT}:6667" -p "127.0.0.1:${TLS_CLIENT_PORT}:6697" "${DOCKERIMAGE}")

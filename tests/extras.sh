@@ -17,10 +17,10 @@ TESTMODULE="m_svsoper"
 # Create directory for testing
 mkdir -p /tmp/test-extras/
 
-docker build --build-arg EXTRASMODULES="$TESTMODULE" .
+docker build --build-arg EXTRASMODULES="$TESTMODULE" --build-arg VERSION="${INSP_VERSION}" .
 
 # Build a second time to have a hash (everything is cached so it's no real build)
-DOCKERIMAGE=$(docker build -q  --build-arg EXTRASMODULES="$TESTMODULE" .)
+DOCKERIMAGE=$(docker build -q  --build-arg EXTRASMODULES="$TESTMODULE" --build-arg VERSION="${INSP_VERSION}" .)
 
 # Run container in a simple way
 DOCKERCONTAINER=$(docker run -d -p "127.0.0.1:${CLIENT_PORT}:6667" -p "127.0.0.1:${TLS_CLIENT_PORT}:6697" "${DOCKERIMAGE}")

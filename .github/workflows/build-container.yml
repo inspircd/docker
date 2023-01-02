@@ -4,6 +4,7 @@ on:
   push:
   schedule:
     - cron: '0 0 * * 1'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -58,8 +59,6 @@ jobs:
           echo "* * * Image built, running tests... * * *"
           ./run_tests.sh
           echo "* * * Tests OK! * * *"
-        env:
-          INSP_VERSION: ${{ env.INSP_VERSION }}
       -
         name: Docker meta
         id: meta
