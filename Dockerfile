@@ -17,7 +17,7 @@ RUN apk add --no-cache gcc g++ make git pkgconfig perl \
 RUN addgroup -g 10000 -S inspircd
 RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
-RUN git clone https://github.com/inspircd/inspircd.git inspircd-src
+RUN git clone --branch $VERSION https://github.com/inspircd/inspircd.git inspircd-src
 
 WORKDIR /inspircd-src
 RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
