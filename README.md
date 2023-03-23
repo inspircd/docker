@@ -23,7 +23,7 @@ If port `6697` or `6667` are already in use another random port is used. Otherwi
 First, a simple run command:
 
 ```console
-$ docker run --name ircd -p 6667:6667 inspircd/inspircd-docker
+$ docker run --name ircd -p 6667:6667 ghcr.io/inspircd/inspircd-docker
 ```
 
 This will start an InspIRCd instance listening on the default IRC port 6667 on the container.
@@ -33,7 +33,7 @@ You should then be able to connect using your favourite client.
 To include your configuration into the container use:
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -v /path/to/your/config:/inspircd/conf/ ghcr.io/inspircd/inspircd-docker
 ```
 
 *Notice: In case you provide an empty directory make sure it's owned by UID 10000. Use `chown 10000 directory` to correct permissions*
@@ -69,7 +69,7 @@ Use the following environment variables to configure your container:
 A quick example how to use the environment variables:
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -e "INSP_NET_NAME=MyExampleNet" ghcr.io/inspircd/inspircd-docker
 ```
 
 ### Initial setup issues
@@ -79,7 +79,7 @@ If you have issues with registration timeouts when connecting to a fresh install
 To see if you're affected by this particular issue, try disabling DNS Blacklists, e.g.
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -e "INSP_ENABLE_DNSBL=no" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -e "INSP_ENABLE_DNSBL=no" ghcr.io/inspircd/inspircd-docker
 ```
 
 If you can connect with `INSP_ENABLE_DNSBL=no`, try adding a DNS configuration to your `inspircd.conf` file to point to a DNS server you trust. See [the DNS docs](https://docs.inspircd.org/3/configuration/#ltdnsgt) for details.
@@ -90,12 +90,12 @@ You can either set a plaintext password or a hashed password. If you leave `INSP
 
 To use connect password `s3cret` stored in plaintext:
 ```console
-$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_PASSWORD=s3cret" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_PASSWORD=s3cret" ghcr.io/inspircd/inspircd-docker
 ```
 
 To use connect password `s3cret` stored with `hmac-sha256`:
 ```console
-$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_HASH=hmac-sha256" -e "INSP_CONNECT_PASSWORD=mlknZfDb\$C5E0lXKxdoHFxmsJEfSNe8Ct4XG25slv2WiJvUnnWew" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_HASH=hmac-sha256" -e "INSP_CONNECT_PASSWORD=mlknZfDb\$C5E0lXKxdoHFxmsJEfSNe8Ct4XG25slv2WiJvUnnWew" ghcr.io/inspircd/inspircd-docker
 ```
 
 *Make sure you escape special chars like `$` or `&` if needed. If you are using `docker-compose` you might need to double escape and use double-dollar signs*
@@ -128,7 +128,7 @@ To generate a password hash connect to the network and use `/mkpasswd <hash-type
 For example to oper up with `/oper oper s3cret` you would run the following line:
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_OPER_PASSWORD_HASH=cNkbWRWn\$MhSTITMbrCxp0neoDqL66/MSI2C+oxIa4Ux6DXb5R4Q" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_OPER_PASSWORD_HASH=cNkbWRWn\$MhSTITMbrCxp0neoDqL66/MSI2C+oxIa4Ux6DXb5R4Q" ghcr.io/inspircd/inspircd-docker
 ```
 
 *Make sure you escape special chars like `$` or `&` if needed*
@@ -191,7 +191,7 @@ This way you can easily connect [Anope](https://www.anope.org/) or [Atheme](http
 If you want to link `services.example.com` for example, you have to specify at least the `INSP_SERVICES_PASSWORD`:
 
 ```consle
-$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_SERVICES_PASSWORD=somesecretpassword" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_SERVICES_PASSWORD=somesecretpassword" ghcr.io/inspircd/inspircd-docker
 ```
 
 *Make sure you run the services and InspIRCd container on the same docker network or specify the correct `INSP_SERVICES_ALLOWMASK`*
@@ -204,7 +204,7 @@ $ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_SERVICES_PASSWOR
 This container image generates a self-signed TLS certificate on start-up as long as none exists. To use this container with TLS enabled:
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 ghcr.io/inspircd/inspircd-docker
 ```
 
 You can customize the self-signed TLS certificate using the following environment variables:
@@ -224,7 +224,7 @@ You can customize the self-signed TLS certificate using the following environmen
 This will generate a self-signed certificate for `irc.example.org` instead of `irc.example.com`:
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_TLS_CN=irc.example.org" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_TLS_CN=irc.example.org" ghcr.io/inspircd/inspircd-docker
 ```
 
 ### Using secrets
@@ -237,7 +237,7 @@ We provide the ability to use `secrets` with this image to place a certificate t
 docker secret create irc.key /path/to/your/ircd.key
 docker secret create inspircd.crt /path/to/your/ircd.crt
 
-docker service create --name inspircd --secret source=irc.key,target=inspircd.key,mode=0400 --secret inspircd.crt inspircd/inspircd-docker
+docker service create --name inspircd --secret source=irc.key,target=inspircd.key,mode=0400 --secret inspircd.crt ghcr.io/inspircd/inspircd-docker
 ```
 
 Notice the syntax `--secret source=irc.key,target=inspircd.key` allows you to name a secret in a way you like.
@@ -254,7 +254,7 @@ To extend the default configuration you can use `/inspircd/conf.d/`.
 All `.conf`-files placed there, by mounting or extending the image, are automatically included.
 
 ```console
-$ docker run --name inspircd -p 6667:6667 -v /path/to/your/configs:/inspircd/conf.d/ inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -v /path/to/your/configs:/inspircd/conf.d/ ghcr.io/inspircd/inspircd-docker
 ```
 
 *You have to take care about possible conflicts with the existing configuration. If you want a full custom configuration,
@@ -270,7 +270,7 @@ For example to add your own oper configuration.
 ```console
 docker secret create secret-opers /path/to/your/opers.conf
 
-docker service create --name inspircd --secret secret-opers inspircd/inspircd-docker
+docker service create --name inspircd --secret secret-opers ghcr.io/inspircd/inspircd-docker
 ```
 
 # Build extras
@@ -304,10 +304,10 @@ Make sure you install all needed dependencies using `ADDPACKAGES`.
 
 # Updates and updating
 
-To update your setup simply pull the newest image version from docker hub and run it.
+To update your setup simply pull the newest image version from the GitHub Container Registry and run it.
 
 ```console
-docker pull inspircd/inspircd-docker
+docker pull ghcr.io/inspircd/inspircd-docker
 ```
 
 We automatically build our images weekly to include the current state of modern libraries.
