@@ -1,5 +1,5 @@
 tests/
 version.sh
-.travis.yml
+.github
 .gitignore
 *.md
