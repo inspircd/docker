@@ -10,9 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-20.04
     env:
-      DOCKER_REPO: inspircd/inspircd-docker
+      DOCKER_REPO: mobiusmindflip/inspircd
       GITHUB_BRANCH: master
-      GITHUB_REPO: inspircd/inspircd-docker
+      GITHUB_REPO: MobiusCraftFlip/inspircd-docker
       INSP_VERSION: v3.15.0
     steps:
       -
