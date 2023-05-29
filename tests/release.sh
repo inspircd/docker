@@ -29,6 +29,6 @@ command_exists jq
 if version_ge "$INSP_VERSION" "$(github_latest_release "inspircd/inspircd")"; then
     echo "InspIRCd version ($INSP_VERSION) is up to date! Test successful."
 else
-    echo >&2 "A newer base image is available! Please update. New version is $(github_latest_release "inspircd/inspircd")"
+    echo >&2 "A newer InspIRCd release is available! Please update. New version is $(github_latest_release "inspircd/inspircd")"
     exit 1
 fi
