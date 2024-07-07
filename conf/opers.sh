@@ -20,8 +20,8 @@ cat <<EOF
 <define name="operName" value="${INSP_OPER_NAME:-oper}">
 <define name="operPassword" value="${INSP_OPER_PASSWORD_HASH}">
 <define name="operFingerprint" value="${INSP_OPER_FINGERPRINT}">
-<define name="operAutologin" value="${INSP_OPER_SSLONLY:-yes}">
-<define name="operSSLOnly" value="${INSP_OPER_AUTOLOGIN:-yes}">
+<define name="operAutologin" value="${INSP_OPER_AUTOLOGIN:-yes}">
+<define name="operSSLOnly" value="${INSP_OPER_SSLONLY:-yes}">
 <define name="operHash" value="${INSP_OPER_HASH:-hmac-sha256}">
 <define name="operHost" value="${INSP_OPER_HOST:-*@*}">
 EOF
