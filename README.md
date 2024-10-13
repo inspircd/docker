@@ -356,7 +356,7 @@ Please see [the Docker installation documentation](https://docs.docker.com/insta
 
 If you have any problems with or questions about this image, please contact us through a [GitHub issue](https://github.com/inspircd/docker/issues).
 
-You can also reach many of the project maintainers via the `#inspircd` IRC channel on [Chatspike](https://chatspike.net).
+You can also reach many of the project maintainers via the `#inspircd` IRC channel on [Teranova](https://www.teranova.net/).
 
 ## Contributing
 
