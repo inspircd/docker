@@ -107,7 +107,7 @@ We provide two possibly ways to define a default oper for the server.
 
 If neither `INSP_OPER_PASSWORD_HASH`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will be provided to keep your server secure.
 
-Further details see official [`opers.conf` docs](https://github.com/inspircd/inspircd/blob/insp20/docs/conf/opers.conf.example#L77-L165).
+Further details see official [`opers.conf` docs](https://github.com/inspircd/inspircd/blob/insp3/docs/conf/opers.conf.example#L103-L999).
 
 ### Password authentication
 
