@@ -326,9 +326,11 @@ We provide information about features we remove in future.
 
 We document changes that possibly broken your setup and are no longer supported. Hopefully, we can provide useful information for debugging.
 
-* [`046bb02`](https://github.com/inspircd/docker/commit/046bb028a700755ee9669b20c02057a947e2fe34) Update to InspIRCd 3.0 requires some config changes. If you run InspIRCd using docker-compose or by mounting a volume, make sure you update your config according to the [docs page](https://docs.inspircd.org/3/configuration-changes/).
+* [`debf2e8`](https://github.com/inspircd/docker/commit/debf2e8cb61881b7ccb3d5fa6f219b333cdac3a9) &mdash; Update to InspIRCd v4 requires some config changes. If you use environment variables replace `INSP_ADMIN_NICK` with `INSP_ADMIN_DESC`. If you run InspIRCd using docker-compose or by mounting a volume, make sure you update your config according to the [docs page](https://docs.inspircd.org/4/configuration-changes/).
 
-* [`cdba94f`](https://github.com/inspircd/docker/commit/cdba94f6ae0c71ad37b3a88114a14ecb0c5177c1) `ADDPACKAGES` and `DELPACKAGES` are replaced by `BUILD_DEPENDENCIES` and `RUN_DEPENDENCIES`
+* [`046bb02`](https://github.com/inspircd/docker/commit/046bb028a700755ee9669b20c02057a947e2fe34) &mdash; Update to InspIRCd v3 requires some config changes. If you run InspIRCd using docker-compose or by mounting a volume, make sure you update your config according to the [docs page](https://docs.inspircd.org/3/configuration-changes/).
+
+* [`cdba94f`](https://github.com/inspircd/docker/commit/cdba94f6ae0c71ad37b3a88114a14ecb0c5177c1) &mdash; `ADDPACKAGES` and `DELPACKAGES` are replaced by `BUILD_DEPENDENCIES` and `RUN_DEPENDENCIES`
 
 # Additional information
 
