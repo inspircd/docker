@@ -23,7 +23,7 @@ cat <<EOF
 
 # Admin section
 <define name="adminname" value="${INSP_ADMIN_NAME:-Jonny English}">
-<define name="adminnick" value="${INSP_ADMIN_NICK:-MI5}">
+<define name="admindesc" value="${INSP_ADMIN_DESC:-MI5}">
 <define name="adminemail" value="${INSP_ADMIN_EMAIL:-jonny.english@example.com}">
 
 # Connect block section

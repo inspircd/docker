@@ -21,7 +21,7 @@ version_ge() { test "$(printf '%s\n' "$@" | sort -V | head -n 1)" != "$1" || tes
 
 # GitHub get latest release tag
 # See: https://www.shivering-isles.com/helpful-shell-snippets-for-docker-testing-and-bootstrapping/
-github_latest_release() { wget -qO- "https://api.github.com/repos/$1/releases" | jq --raw-output 'map(select((.draft | not) and (.tag_name | startswith("v3.")))) | first .tag_name | .[1:]'; }
+github_latest_release() { wget -qO- "https://api.github.com/repos/$1/releases" | jq --raw-output 'map(select((.draft | not) and (.tag_name | startswith("v4.")))) | first .tag_name | .[1:]'; }
 
 command_exists wget
 command_exists jq

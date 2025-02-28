@@ -2,7 +2,7 @@ FROM alpine:3.21 AS builder
 
 LABEL maintainer="InspIRCd Team <noreply@inspircd.org>"
 
-ARG VERSION=insp3
+ARG VERSION=insp4
 ARG CONFIGUREARGS=
 ARG EXTRASMODULES=
 ARG BUILD_DEPENDENCIES=
@@ -26,7 +26,7 @@ RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 RUN { [ $(ls /src/modules/ | wc -l) -gt 0 ] && cp -r /src/modules/* /inspircd-src/src/modules/ || echo "No modules overwritten/added by repository"; }
 RUN echo $EXTRASMODULES | xargs --no-run-if-empty ./modulemanager install
 
-RUN ./configure --prefix /inspircd --uid 10000 --gid 10000
+RUN ./configure --prefix /inspircd --example-dir /inspircd/examples --uid 10000 --gid 10000
 RUN echo $CONFIGUREARGS | xargs --no-run-if-empty ./configure
 RUN make -j`getconf _NPROCESSORS_ONLN` install
 

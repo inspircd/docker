@@ -60,7 +60,7 @@ Use the following environment variables to configure your container:
 |`INSP_NET_NAME`          |`Omega`                         |Name advertised as network name               |
 |`INSP_SERVER_NAME`       |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be an FQDN        |
 |`INSP_ADMIN_NAME`        |`Jonny English`                 |Name showed by the `/admin` command           |
-|`INSP_ADMIN_NICK`        |`MI5`                           |Nick showed by the `/admin` command           |
+|`INSP_ADMIN_DESC`        |`MI5`                           |Description showed by the `/admin` command           |
 |`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command          |
 |`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs                 |
 |`INSP_CONNECT_PASSWORD`  |no default                      |Password either as plaintext, or hash value   |
@@ -82,7 +82,7 @@ To see if you're affected by this particular issue, try disabling DNS Blacklists
 $ docker run --name inspircd -p 6667:6667 -e "INSP_ENABLE_DNSBL=no" inspircd/inspircd-docker
 ```
 
-If you can connect with `INSP_ENABLE_DNSBL=no`, try adding a DNS configuration to your `inspircd.conf` file to point to a DNS server you trust. See [the DNS docs](https://docs.inspircd.org/3/configuration/#ltdnsgt) for details.
+If you can connect with `INSP_ENABLE_DNSBL=no`, try adding a DNS configuration to your `inspircd.conf` file to point to a DNS server you trust. See [the DNS docs](https://docs.inspircd.org/4/configuration/#dns) for details.
 
 ### Password authentication
 
@@ -107,7 +107,7 @@ We provide two possibly ways to define a default oper for the server.
 
 If neither `INSP_OPER_PASSWORD_HASH`, nor `INSP_OPER_FINGERPRINT` is configured, no oper will be provided to keep your server secure.
 
-Further details see official [`opers.conf` docs](https://github.com/inspircd/inspircd/blob/insp3/docs/conf/opers.conf.example#L103-L999).
+Further details see official [`opers.conf` docs](https://github.com/inspircd/inspircd/blob/insp4/docs/conf/opers.example.conf).
 
 ### Password authentication
 
@@ -282,13 +282,13 @@ Available build arguments:
 |Argument            |Description                                                              |
 |--------------------|-------------------------------------------------------------------------|
 |`VERSION`           |Version of InspIRCd. Uses `-b`-parameter from `git clone`                |
-|`CONFIGUREARGS`     |Additional parameters. Used to enable core extras like `m_geo_maxmind`   |
-|`EXTRASMODULES`     |Additional modules from [inspircd-contrib](https://github.com/inspircd/inspircd-contrib) repository like `m_geocmd`|
+|`CONFIGUREARGS`     |Additional parameters. Used to enable core extras like `geo_maxmind`   |
+|`EXTRASMODULES`     |Additional modules from [inspircd-contrib](https://github.com/inspircd/inspircd-contrib) repository like `geocmd`|
 |`BUILD_DEPENDENCIES`|Additional packages which are only needed during compilation             |
 |`RUN_DEPENDENCIES`  |Additional packages which are needed to run InspIRCd                     |
 
 ```console
-docker build --build-arg "BUILD_DEPENDENCIES=libmaxminddb-dev pcre-dev" --build-arg "RUN_DEPENDENCIES=libmaxminddb pcre" --build-arg "CONFIGUREARGS=--enable-extras m_geo_maxmind --enable-extras m_regex_pcre"  --build-arg "EXTRASMODULES=m_geocmd" --build-arg "VERSION=v1.2.3" inspircd-docker
+docker build --build-arg "BUILD_DEPENDENCIES=libmaxminddb-dev pcre-dev" --build-arg "RUN_DEPENDENCIES=libmaxminddb pcre" --build-arg "CONFIGUREARGS=--enable-extras geo_maxmind --enable-extras regex_pcre"  --build-arg "EXTRASMODULES=geocmd" --build-arg "VERSION=v1.2.3" inspircd-docker
 ```
 
 ## Building additional modules
