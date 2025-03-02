@@ -57,11 +57,11 @@ Use the following environment variables to configure your container:
 |Available variables      |Default value                   |Description                                   |
 |-------------------------|--------------------------------|----------------------------------------------|
 |`INSP_NET_SUFFIX`        |`.example.com`                  |Suffix used behind the server name            |
-|`INSP_NET_NAME`          |`Omega`                         |Name advertised as network name               |
+|`INSP_NET_NAME`          |`ExampleNet`                    |Name advertised as network name               |
 |`INSP_SERVER_NAME`       |Container ID + `INSP_NET_SUFFIX`|Full container name. Has to be an FQDN        |
-|`INSP_ADMIN_NAME`        |`Jonny English`                 |Name showed by the `/admin` command           |
-|`INSP_ADMIN_DESC`        |`MI5`                           |Description showed by the `/admin` command           |
-|`INSP_ADMIN_EMAIL`       |`jonny.english@example.com`     |E-mail shown by the `/admin` command          |
+|`INSP_ADMIN_NAME`        |`Adam Inistrator`               |Name showed by the `/admin` command           |
+|`INSP_ADMIN_DESC`        |`Supreme Overlord`              |Description showed by the `/admin` command           |
+|`INSP_ADMIN_EMAIL`       |`noreply@${INSP_SERVER_NAME}`   |E-mail shown by the `/admin` command          |
 |`INSP_ENABLE_DNSBL`      |`yes`                           |Set to `no` to disable DNSBLs                 |
 |`INSP_CONNECT_PASSWORD`  |no default                      |Password either as plaintext, or hash value   |
 |`INSP_CONNECT_HASH`      |no default                      |Hashing algorithm for `INSP_CONNECT_PASSWORD` |

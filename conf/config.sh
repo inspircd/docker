@@ -18,13 +18,13 @@ cat <<EOF
 # Network section
 <define name="hostname" value="${INSP_SERVER_HOSTNAME:-irc}">
 <define name="netsuffix" value="${INSP_NET_SUFFIX:-.example.com}">
-<define name="netname" value="${INSP_NET_NAME:-Omega}">
+<define name="netname" value="${INSP_NET_NAME:-ExampleNet}">
 <define name="servername" value="${INSP_SERVER_NAME:-&hostname;&netsuffix;}">
 
 # Admin section
-<define name="adminname" value="${INSP_ADMIN_NAME:-Jonny English}">
-<define name="admindesc" value="${INSP_ADMIN_DESC:-MI5}">
-<define name="adminemail" value="${INSP_ADMIN_EMAIL:-jonny.english@example.com}">
+<define name="adminname" value="${INSP_ADMIN_NAME:-Adam Inistrator}">
+<define name="admindesc" value="${INSP_ADMIN_DESC:-Supreme Overlord}">
+<define name="adminemail" value="${INSP_ADMIN_EMAIL:-noreply@&servername;}">
 
 # Connect block section
 <define name="usednsbl" value="${INSP_ENABLE_DNSBL:-yes}">
