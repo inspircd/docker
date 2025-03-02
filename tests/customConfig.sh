@@ -16,7 +16,7 @@ TESTFILE="/tmp/tests-customConfig/test.conf"
 
 mkdir -p "$(dirname $TESTFILE)"
 
-echo "<module name=\"m_cban.so\">" >"$TESTFILE"
+echo "<module name=\"cban\">" >"$TESTFILE"
 
 # Run container with configs attached
 DOCKERCONTAINER=$(docker run -d -v "$TESTFILE:/inspircd/conf.d/test.conf" -p "127.0.0.1:${CLIENT_PORT}:6667" -p "127.0.0.1:${TLS_CLIENT_PORT}:6697" inspircd:testing)

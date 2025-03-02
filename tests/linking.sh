@@ -26,10 +26,10 @@ DOCKERCONTAINER2=$(docker run -d --name test2 --network linkingTestNet -e INSP_S
 sleep 10
 
 # Check logs of the deamons
-if ! docker logs "$DOCKERCONTAINER1" | grep "LINK:.*Received.*end.*of.*netburst.*from.*test2.example.com"; then
+if ! docker logs "$DOCKERCONTAINER1" | grep "LINK.*:.*Received.*end.*of.*netburst.*from.*test2.example.com"; then
     sleep 60;
 fi
-docker logs "$DOCKERCONTAINER2" | grep "LINK:.*Received.*end.*of.*netburst.*from.*test1.example.com"
+docker logs "$DOCKERCONTAINER2" | grep "LINK.*:.*Received.*end.*of.*netburst.*from.*test1.example.com"
 
 # Clean up
 docker stop "${DOCKERCONTAINER1}" "${DOCKERCONTAINER2}" && docker rm "${DOCKERCONTAINER1}" "${DOCKERCONTAINER2}" && docker network rm "$DOCKERNETWORK"

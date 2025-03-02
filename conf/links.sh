@@ -78,7 +78,7 @@ if [ "${SENDPASS}" != "" ] && [ "${RECVPASS}" != "" ] && [ "${NAME}" != "" ] && 
 
     # Set TLS support by extending the generation config extension
     if [ "${TLS_ON}" = "yes" ]; then
-        OPTIONS="$OPTIONS ssl=\"gnutls\""
+        OPTIONS="$OPTIONS sslprofile=\"main\""
     fi
 
     if [ "$FINGERPRINT" != "" ]; then

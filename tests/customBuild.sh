@@ -18,7 +18,7 @@ mkdir -p "$TESTDIR"
 
 cp -r . "$TESTDIR"
 
-wget -O "$TESTDIR/modules/m_geocmd.cpp"  "https://raw.githubusercontent.com/inspircd/inspircd-contrib/master/3/m_geocmd.cpp"
+wget -O "$TESTDIR/modules/m_geocmd.cpp"  "https://raw.githubusercontent.com/inspircd/inspircd-contrib/master/4/m_geocmd.cpp"
 
 [ ! -e "$TESTDIR/modules/m_geocmd.cpp" ] && sleep 10
 

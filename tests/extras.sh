@@ -12,7 +12,7 @@ set -e
 # shellcheck source=tests/.portconfig.sh
 . "$(dirname "$0")/.portconfig.sh"
 
-TESTMODULE="m_svsoper"
+TESTMODULE="m_geocmd"
 
 # Create directory for testing
 mkdir -p /tmp/test-extras/

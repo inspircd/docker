@@ -143,7 +143,7 @@ Provide the SHA256 fingerprint of the certificate as `INSP_OPER_FINGERPRINT` to 
 |-------------------------|--------------------------------|----------------------------------------------|
 |`INSP_OPER_NAME`         |`oper`                          |Oper name for usage with `/oper`              |
 |`INSP_OPER_FINGERPRINT`  |no default                      |Oper TLS fingerprint (SHA256)                 |
-|`INSP_OPER_AUTOLOGIN`    |`yes`                           |Automatic login of with TLS fingerprint       |
+|`INSP_OPER_AUTOLOGIN`    |`no`                            |Automatic login of with TLS fingerprint       |
 
 
 ## Linking servers and services

@@ -27,7 +27,7 @@ fi
 
 # Set TLS support by extending the generation config extension
 if [ "${INSP_SERVICES_TLS_ON}" = "yes" ]; then
-    INSP_SERVICES_OPTIONS="$INSP_SERVICES_OPTIONS ssl=\"gnutls\""
+    INSP_SERVICES_OPTIONS="$INSP_SERVICES_OPTIONS sslprofile=\"main\""
 fi
 
 # Set default services name
@@ -44,9 +44,9 @@ cat <<EOF
       recvpass="${INSP_SERVICES_RECVPASS}"
       ${INSP_SERVICES_OPTIONS}>
 
-<uline server="$INSP_SERVICES_NAME" silent="yes">
+<services server="$INSP_SERVICES_NAME" silent="yes">
 
-<module name="m_sasl.so">
+<module name="sasl">
 <sasl target="$INSP_SERVICES_NAME">
 EOF
 fi
