@@ -19,10 +19,6 @@ RUN adduser -u 10000 -h /inspircd/ -D -S -G inspircd inspircd
 
 RUN git clone --branch $VERSION https://github.com/inspircd/inspircd.git inspircd-src
 
-# TODO: remove this after updating to the next release
-RUN wget --output-document - --output-file /dev/null https://github.com/inspircd/inspircd/commit/030d71057597553dad26df8d9491c00f95bff669.patch | git -C inspircd-src apply
-RUN wget --output-document - --output-file /dev/null https://github.com/inspircd/inspircd/commit/42afdfd072c16bb762c5f7db9f0eed19b1acedf6.patch | git -C inspircd-src apply
-
 WORKDIR /inspircd-src
 RUN git checkout $(git describe --abbrev=0 --tags $VERSION)
 
