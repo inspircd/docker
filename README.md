@@ -93,9 +93,9 @@ To use connect password `s3cret` stored in plaintext:
 $ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_PASSWORD=s3cret" inspircd/inspircd-docker
 ```
 
-To use connect password `s3cret` stored with `hmac-sha256`:
+To use connect password `s3cret` stored with `bcrypt`:
 ```console
-$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_HASH=hmac-sha256" -e "INSP_CONNECT_PASSWORD=mlknZfDb\$C5E0lXKxdoHFxmsJEfSNe8Ct4XG25slv2WiJvUnnWew" inspircd/inspircd-docker
+$ docker run --name inspircd -p 6667:6667 -e "INSP_CONNECT_HASH=bcrypt" -e "INSP_CONNECT_PASSWORD=\$2a\$12\$vqVao8w4cUbtE02dh0sqyu6OGnEZEw452SPyWQBE5QGg3ePJbtusm" inspircd/inspircd-docker
 ```
 
 *Make sure you escape special chars like `$` or `&` if needed. If you are using `docker-compose` you might need to double escape and use double-dollar signs*
