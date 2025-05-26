@@ -132,6 +132,12 @@ cat <<EOF
       # the private key is well-protected! Requires m_sslinfo.
       autologin="&operAutologin;"
 
+      # host: What hostnames and IPs are allowed to use this operator account.
+      # Multiple options can be separated by spaces and CIDRs are allowed.
+      # You can use just * or *@* for this section, but it is not recommended
+      # for security reasons.
+      host="&operHost;"
+
       nopassword="yes"
       sslonly="&operSSLOnly;"
       type="NetAdmin">
