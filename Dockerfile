@@ -1,4 +1,4 @@
-FROM alpine:3.21 AS builder
+FROM alpine:3.22 AS builder
 
 LABEL maintainer="InspIRCd Team <noreply@inspircd.org>"
 
@@ -34,7 +34,7 @@ RUN make -j`getconf _NPROCESSORS_ONLN` install
 RUN rm -rf /inspircd/conf/*
 
 # Stage 1: Create optimized runtime container
-FROM alpine:3.21
+FROM alpine:3.22
 
 ARG RUN_DEPENDENCIES=
 
