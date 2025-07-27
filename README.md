@@ -201,7 +201,7 @@ $ docker run --name inspircd -p 6667:6667 -p 6697:6697 -e "INSP_SERVICES_PASSWOR
 
 ### Using self-generated certificates
 
-This container image generates a self-signed TLS certificate on start-up as long as none exists. To use this container with TLS enabled:
+This container image generates a self-signed TLS certificate on start-up as long as none exists. This is intended for testing only and you should provide a real key and certificate from a trusted authority once testing is complete. To use this container with TLS enabled:
 
 ```console
 $ docker run --name inspircd -p 6667:6667 -p 6697:6697 inspircd/inspircd-docker
