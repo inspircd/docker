@@ -16,7 +16,7 @@ jobs:
       INSP_VERSION: v4.8.0
     steps:
       -
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       -
         name: Pipeline variables
         id: pipeline_vars
