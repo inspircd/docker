@@ -87,7 +87,7 @@ jobs:
       -
         name: Update description on Docker Hub
         if: github.repository == env.GITHUB_REPO && github.ref_name == env.GITHUB_BRANCH
-        uses: peter-evans/dockerhub-description@v4
+        uses: peter-evans/dockerhub-description@v5
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
